@@ -9,29 +9,45 @@ public class Inventory {
 
     @Id
     @Column
-    private String ID;
-    
+    private String id;
+
     @Column
-    private String ItemName;
-    
+    private String itemName;
+
     @Column
-    private Double Price;
+    private Double price;
 
-    public Inventory(String Id, String itemName, Double price) {
-        this.ID = Id;
-        this.ItemName = itemName;
-        this.Price = price;
+    public Inventory() {
+
     }
 
-    public String GetId() {
-        return this.ID;
+    public Inventory(String id, String itemName, Double price) {
+        this.id = id;
+        this.itemName = itemName;
+        this.price = price;
     }
 
-    public String GetItemName() {
-        return this.ItemName;
+    public String getId() {
+        return id;
     }
 
-    public Double GetPrice() {
-        return this.Price;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }
