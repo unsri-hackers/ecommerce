@@ -2,14 +2,16 @@ package com.unsri.ecommerce.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
 public class Inventory {
 
     @Id
+    @GeneratedValue
     @Column
-    private String id;
+    private int id;
 
     @Column
     private String itemName;
@@ -21,17 +23,22 @@ public class Inventory {
 
     }
 
-    public Inventory(String id, String itemName, Double price) {
+    public Inventory(int id, String itemName, Double price) {
         this.id = id;
         this.itemName = itemName;
         this.price = price;
     }
 
-    public String getId() {
+    public Inventory(String itemName, Double price) {
+        this.itemName = itemName;
+        this.price = price;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

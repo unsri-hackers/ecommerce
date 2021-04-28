@@ -25,5 +25,12 @@ public class InventoryServiceImpl implements InventoryService {
 
         return items;
     }
+
+    @Override
+    public Inventory AddItems(Inventory item) {
+        return _repository.save(item);
+    }
+
+    
     
 }

@@ -6,6 +6,8 @@ import com.unsri.ecommerce.models.Inventory;
 import com.unsri.ecommerce.service.InventoryService;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -21,4 +23,10 @@ public class InventoryController {
     public List<Inventory> GetHelloWorld() {
         return _inventoryService.GetAllItems();
     }
+
+    @PostMapping("/AddItems")
+    public Inventory AddItems(@RequestBody Inventory item){
+        return _inventoryService.AddItems(item);
+    }
+
 }
