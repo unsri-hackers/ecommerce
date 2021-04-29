@@ -31,6 +31,18 @@ public class InventoryServiceImpl implements InventoryService {
         return _repository.save(item);
     }
 
-    
+    @Override
+    public Inventory updateInventory(int id, Inventory newIntentory) {
+        return _repository.findById(id)
+            .map(inventory -> {
+                inventory.setItemName(newIntentory.getItemName());
+                inventory.setPrice(newIntentory.getPrice());
+                return _repository.save(inventory);
+            })
+            .orElseGet(() -> {
+                newIntentory.setId(id);
+                return _repository.save(newIntentory);
+            });
+    }
     
 }

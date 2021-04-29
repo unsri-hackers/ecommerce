@@ -5,10 +5,7 @@ import java.util.List;
 import com.unsri.ecommerce.models.Inventory;
 import com.unsri.ecommerce.service.InventoryService;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class InventoryController {
@@ -29,4 +26,8 @@ public class InventoryController {
         return _inventoryService.AddItems(item);
     }
 
+    @PutMapping("/inventories/{id}")
+    Inventory updateInventory(@PathVariable int id, @RequestBody Inventory newInventory) {
+        return _inventoryService.updateInventory(id, newInventory);
+    }
 }
