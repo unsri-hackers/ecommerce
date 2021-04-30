@@ -1,4 +1,4 @@
-package com.unsri.ecommerce.models;
+package com.unsri.ecommerce.domain.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
