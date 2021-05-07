@@ -19,11 +19,11 @@ import org.springframework.util.Assert;
 
 @SpringBootTest
 public class GetInventoryTests {
-    
-    @InjectMocks
-    private InventoryRepository inventoryRepository;
 
     @Mock
+    private InventoryRepository inventoryRepository;
+
+    @InjectMocks
     private GetInventory getInventory;
 
     @BeforeAll
@@ -32,17 +32,19 @@ public class GetInventoryTests {
 
     @Test
     public void GetInventoryTests_ReturnSuccess() {
-        // arrange
-        when(inventoryRepository.findAll())
-        .thenReturn(new ArrayList());
+        // Arrange
+        ArrayList<Inventory> list = new ArrayList<>();
+        list.add(new Inventory());
 
-        // act
+        when(inventoryRepository.findAll()).thenReturn(list);
+
+        // Act
         List<Inventory> expectedResult = getInventory.execute();
 
-        // assert
-        Assert.isTrue(expectedResult.size() == 1, "should more than 1");
+        // Assert
+        Assert.isTrue(expectedResult.size() > 0, "should more than 0");
 
-        // verify
+        // Verify
         verify(inventoryRepository, times(1)).findAll();
     }
 }
