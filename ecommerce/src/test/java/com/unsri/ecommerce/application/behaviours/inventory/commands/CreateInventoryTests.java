@@ -1,15 +1,16 @@
 package com.unsri.ecommerce.application.behaviours.inventory.commands;
 
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import com.unsri.ecommerce.domain.models.Inventory;
 import com.unsri.ecommerce.infrastructure.repository.InventoryRepository;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.util.Assert;
-
-import static org.mockito.Mockito.*;
 
 public class CreateInventoryTests {
 
@@ -17,16 +18,15 @@ public class CreateInventoryTests {
     private InventoryRepository inventoryRepository;
     private Inventory inventory;
 
-    @InjectMocks
     private CreateInventory createInventory;
 
-    @BeforeEach
-    public void CreateInventoryTests() {
+    public CreateInventoryTests() {
+        MockitoAnnotations.openMocks(this);
         inventory = new Inventory();
         inventory.setItemName("Apple");
         inventory.setPrice(1000.0);
 
-        createInventory = new CreateInventory(inventory);
+        createInventory = new CreateInventory(inventory, inventoryRepository);
     }
 
     @Test
