@@ -6,6 +6,7 @@ import com.unsri.ecommerce.infrastructure.repository.InventoryRepository;
 import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
+import java.util.Optional;
 
 public class GetInventoriesPaginatedByItemName implements BaseCommand<List<Inventory>> {
 
@@ -21,7 +22,7 @@ public class GetInventoriesPaginatedByItemName implements BaseCommand<List<Inven
     }
 
     @Override
-    public List<Inventory> execute() {
+    public List<Inventory> execute(Optional<List<Inventory>> param) {
         return inventoryRepository.findAllPaginatedByItemName(this.itemName, PageRequest.of(this.page, this.size));
     }
 }

@@ -24,7 +24,7 @@ public class InventoryController {
     @GetMapping("/inventories")
     public List<Inventory> getInventory() {
         GetInventory command = new GetInventory(_InventoryRepository);
-        return command.execute();
+        return command.execute(java.util.Optional.empty());
     }
 
     @GetMapping(value = "/inventories/paging/keyword")
@@ -34,7 +34,7 @@ public class InventoryController {
         @RequestParam(value = "size", defaultValue = "10") int size
     ) {
         GetInventoriesPaginatedByItemName command = new GetInventoriesPaginatedByItemName(_InventoryRepository, keyword, page, size);
-        return command.execute();
+        return command.execute(java.util.Optional.empty());
     }
 
     @GetMapping(value = "/inventories/paging")
@@ -43,18 +43,18 @@ public class InventoryController {
         @RequestParam(value = "size", defaultValue = "10") int size
     ){
         GetInventoriesPaginated command = new GetInventoriesPaginated(_InventoryRepository, page, size);
-        return command.execute();
+        return command.execute(java.util.Optional.empty());
     }
 
     @PostMapping(value = "/inventories")
     public Inventory addItem(@RequestBody Inventory item) {
-        CreateInventory command = new CreateInventory(item, _InventoryRepository);
-        return command.execute();
+        CreateInventory command = new CreateInventory(_InventoryRepository);
+        return command.execute(java.util.Optional.ofNullable(item));
     }
 
-    @PutMapping(value = "/inventories/{id}")
+    @PutMapping("/inventories/{id}")
     Inventory updateInventory(@PathVariable int id, @RequestBody Inventory newInventory) {
-        UpdateInventory command = new UpdateInventory(id, newInventory, _InventoryRepository);
-        return command.execute();
+        UpdateInventory command = new UpdateInventory(id, _InventoryRepository);
+        return command.execute(java.util.Optional.ofNullable(newInventory));
     }
 }
