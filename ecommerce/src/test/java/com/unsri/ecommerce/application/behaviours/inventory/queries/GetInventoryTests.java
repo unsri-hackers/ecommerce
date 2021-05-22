@@ -14,28 +14,29 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.Assert;
 
-@SpringBootTest
 public class GetInventoryTests {
 
     @Mock
     private InventoryRepository inventoryRepository;
 
-    @InjectMocks
     private GetInventory getInventory;
 
-    @BeforeAll
-    public static void setup() {
+    private ArrayList<Inventory> list = new ArrayList<>();
+
+    public GetInventoryTests() {
+        MockitoAnnotations.openMocks(this);
+        getInventory = new GetInventory(inventoryRepository);
+
+        list.add(new Inventory());
     }
 
     @Test
     public void GetInventoryTests_ReturnSuccess() {
         // Arrange
-        ArrayList<Inventory> list = new ArrayList<>();
-        list.add(new Inventory());
-
         when(inventoryRepository.findAll()).thenReturn(list);
 
         // Act
