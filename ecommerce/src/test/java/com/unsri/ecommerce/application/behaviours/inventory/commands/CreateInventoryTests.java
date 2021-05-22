@@ -17,26 +17,25 @@ public class CreateInventoryTests {
     @Mock
     private InventoryRepository inventoryRepository;
 
-    private Inventory inventory;
-
     private CreateInventory createInventory;
 
     public CreateInventoryTests() {
         MockitoAnnotations.openMocks(this);
-        inventory = new Inventory();
-        inventory.setItemName("Apple");
-        inventory.setPrice(1000.0);
 
-        createInventory = new CreateInventory(inventory, inventoryRepository);
+        createInventory = new CreateInventory(inventoryRepository);
     }
 
     @Test
     public void CreateInventoryTests_ReturnSuccess() {
         // Arrange
-        when(inventoryRepository.save(inventory)).thenReturn(inventory);
 
+        Inventory inventory = new Inventory();
+        inventory.setItemName("Apple");
+        inventory.setPrice(1000.0);
+
+        when(inventoryRepository.save(inventory)).thenReturn(inventory);
         // Act
-        Inventory expectedResult = createInventory.execute();
+        Inventory expectedResult = createInventory.execute(java.util.Optional.of(inventory));
 
         // Assert
         Assert.isTrue(expectedResult != null, "should not null");

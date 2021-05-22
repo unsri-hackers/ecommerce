@@ -32,7 +32,7 @@ public class UpdateInventoryTests {
         newInventory.setItemName("Apple 2.0");
         newInventory.setPrice(1200.0);
 
-        updateInventory = new UpdateInventory(existingInventory.getId(), newInventory, inventoryRepository);
+        updateInventory = new UpdateInventory(existingInventory.getId(), inventoryRepository);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class UpdateInventoryTests {
             .thenReturn(newInventory);
 
         // Act
-        Inventory expectedResult = updateInventory.execute();
+        Inventory expectedResult = updateInventory.execute(java.util.Optional.ofNullable(newInventory));
 
         // Assert
         Assert.isTrue(expectedResult != null, "should not null");

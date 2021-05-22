@@ -40,7 +40,7 @@ public class GetInventoryTests {
         when(inventoryRepository.findAll()).thenReturn(list);
 
         // Act
-        List<Inventory> expectedResult = getInventory.execute();
+        List<Inventory> expectedResult = getInventory.execute(null);
 
         // Assert
         Assert.isTrue(expectedResult.size() > 0, "should more than 0");
