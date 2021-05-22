@@ -4,6 +4,9 @@ import com.unsri.ecommerce.application.behaviours.BaseCommand;
 import com.unsri.ecommerce.domain.models.Inventory;
 import com.unsri.ecommerce.infrastructure.repository.InventoryRepository;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class CreateInventory implements BaseCommand<Inventory> {
 
     private Inventory _inventory;

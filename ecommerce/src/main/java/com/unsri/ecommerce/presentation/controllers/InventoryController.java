@@ -8,11 +8,12 @@ import com.unsri.ecommerce.application.behaviours.inventory.queries.GetInventory
 import com.unsri.ecommerce.domain.models.Inventory;
 import com.unsri.ecommerce.infrastructure.repository.InventoryRepository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class InventoryController {
-    
+
     private InventoryRepository _InventoryRepository;
 
     public InventoryController(InventoryRepository inventoryRepository) {
@@ -28,6 +29,7 @@ public class InventoryController {
     @PostMapping("/inventories")
     public Inventory AddItems(@RequestBody Inventory item){
         CreateInventory command = new CreateInventory(item, _InventoryRepository);
+
         return command.execute();
     }
 
