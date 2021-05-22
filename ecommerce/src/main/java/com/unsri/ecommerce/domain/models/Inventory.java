@@ -57,13 +57,4 @@ public class Inventory {
     public void setPrice(Double price) {
         this.price = price;
     }
-
-    @Override
-    public String toString() {
-        return "Inventory{" +
-            "id=" + id +
-            ", itemName='" + itemName + '\'' +
-            ", price=" + price +
-            '}';
-    }
 }

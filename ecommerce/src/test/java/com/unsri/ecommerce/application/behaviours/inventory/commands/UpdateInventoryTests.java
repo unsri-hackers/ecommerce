@@ -49,6 +49,9 @@ public class UpdateInventoryTests {
 
         // Assert
         Assert.isTrue(expectedResult != null, "should not null");
-    }
 
+        // Verify
+        verify(inventoryRepository, times(1)).findById(existingInventory.getId());
+        verify(inventoryRepository, times(1)).save(existingInventory);
+    }
 }
