@@ -16,6 +16,7 @@ public class CreateInventoryTests {
 
     @Mock
     private InventoryRepository inventoryRepository;
+
     private Inventory inventory;
 
     private CreateInventory createInventory;

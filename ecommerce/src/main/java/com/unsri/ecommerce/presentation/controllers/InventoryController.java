@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class InventoryController {
-    
-    @Autowired
+
     private InventoryRepository _InventoryRepository;
 
     public InventoryController(InventoryRepository inventoryRepository) {
@@ -29,8 +28,7 @@ public class InventoryController {
 
     @PostMapping("/inventories")
     public Inventory AddItems(@RequestBody Inventory item){
-        // CreateInventory command = new CreateInventory(item, _InventoryRepository);
-        CreateInventory command = new CreateInventory(item);
+        CreateInventory command = new CreateInventory(item, _InventoryRepository);
 
         return command.execute();
     }
