@@ -22,6 +22,8 @@ public class GetInventoriesPaginated implements BaseCommand<List<Inventory>> {
 
     @Override
     public List<Inventory> execute(Optional<List<Inventory>> param) {
-        return this.inventoryRepository.findAll(pageable).getContent();
+        List<Inventory> tempList = new ArrayList<>();
+        inventoryRepository.findAll(pageable).getContent().forEach(item -> tempList.add(item));
+        return tempList;
     }
 }
