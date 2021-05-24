@@ -4,8 +4,11 @@ import com.unsri.ecommerce.domain.models.Inventory;
 import com.unsri.ecommerce.infrastructure.repository.InventoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.util.Assert;
@@ -22,20 +25,21 @@ class GetInventoriesPaginatedTests {
     private InventoryRepository inventoryRepository;
     private GetInventoriesPaginated getInventoriesPaginated;
     private List<Inventory> inventories = new ArrayList<>();
-    private Pageable pageable = PageRequest.of(0, 10);
-    private Page<Inventory> inventoryPage;
-
+    private Pageable pageable = PageRequest.of(0, 1);
 
     public GetInventoriesPaginatedTests() {
+        MockitoAnnotations.openMocks(this);
+
         getInventoriesPaginated = new GetInventoriesPaginated(inventoryRepository, pageable);
-        inventoryPage = Page.empty(pageable);
     }
 
     @Test
     void GetInventoriesPaginatedTests_ReturnSuccess(){
         // Arrange
-        when(inventoryRepository.findAll(pageable)).thenReturn(inventoryPage);
-        when(inventoryRepository.findAll(pageable).getContent()).thenReturn(inventories);
+        List<Inventory> inventories = new ArrayList<>();
+        inventories.add(new Inventory());
+        Page page = new PageImpl(inventories);
+        when(inventoryRepository.findAll(pageable)).thenReturn(page);
 
         // Act
         List<Inventory> expectedResult = getInventoriesPaginated.execute(Optional.empty()).getContent();
