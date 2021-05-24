@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class GetInventoriesPaginated implements BaseCommand<List<Inventory>> {
+public class GetInventoriesPaginated implements BaseCommand<Page<Inventory>> {
 
     private InventoryRepository inventoryRepository;
     private Pageable pageable;
@@ -21,9 +21,7 @@ public class GetInventoriesPaginated implements BaseCommand<List<Inventory>> {
     }
 
     @Override
-    public List<Inventory> execute(Optional<List<Inventory>> param) {
-        List<Inventory> tempList = new ArrayList<>();
-        inventoryRepository.findAll(pageable).getContent().forEach(item -> tempList.add(item));
-        return tempList;
+    public Page<Inventory> execute(Optional<Page<Inventory>> param) {
+        return inventoryRepository.findAll(pageable);
     }
 }

@@ -49,7 +49,7 @@ public class InventoryController {
     ){
         Pageable pageable = PageRequest.of(page, size);
         GetInventoriesPaginated command = new GetInventoriesPaginated(_InventoryRepository, pageable);
-        return command.execute(Optional.empty());
+        return command.execute(Optional.empty()).getContent();
     }
 
     @PostMapping(value = "/inventories")
