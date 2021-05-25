@@ -18,9 +18,6 @@ public class GetInventory implements BaseCommand<List<Inventory>> {
 
     @Override
     public List<Inventory> execute(Optional<List<Inventory>> param) {
-        List<Inventory> items = new ArrayList<Inventory>();
-        _repository.findAll().forEach(item -> items.add(item));
-
-        return items;
+        return _repository.findAll();
     }
 }

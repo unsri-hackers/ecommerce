@@ -1,22 +1,17 @@
 package com.unsri.ecommerce.application.behaviours.inventory.queries;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import com.unsri.ecommerce.domain.models.Inventory;
+import com.unsri.ecommerce.infrastructure.repository.InventoryRepository;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import com.unsri.ecommerce.domain.models.Inventory;
-import com.unsri.ecommerce.infrastructure.repository.InventoryRepository;
-
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.util.Assert;
+import static org.mockito.Mockito.*;
 
 public class GetInventoryTests {
 
@@ -40,7 +35,7 @@ public class GetInventoryTests {
         when(inventoryRepository.findAll()).thenReturn(list);
 
         // Act
-        List<Inventory> expectedResult = getInventory.execute(null);
+        List<Inventory> expectedResult = getInventory.execute(Optional.empty());
 
         // Assert
         Assert.isTrue(expectedResult.size() > 0, "should more than 0");
