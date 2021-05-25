@@ -23,6 +23,6 @@ public class GetInventoriesPaginatedByItemName implements BaseCommand<List<Inven
 
     @Override
     public List<Inventory> execute(Optional<List<Inventory>> param) {
-        return inventoryRepository.findAllPaginatedByItemName(this.itemName, pageable);
+        return inventoryRepository.findAllPaginatedByItemName(this.itemName, this.pageable);
     }
 }
