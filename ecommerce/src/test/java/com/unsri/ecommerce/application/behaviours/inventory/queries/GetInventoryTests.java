@@ -1,48 +1,46 @@
 package com.unsri.ecommerce.application.behaviours.inventory.queries;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import com.unsri.ecommerce.domain.models.Inventory;
+import com.unsri.ecommerce.infrastructure.repository.InventoryRepository;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import com.unsri.ecommerce.domain.models.Inventory;
-import com.unsri.ecommerce.infrastructure.repository.InventoryRepository;
+import static org.mockito.Mockito.*;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.util.Assert;
-
-@SpringBootTest
 public class GetInventoryTests {
-    
-    @InjectMocks
-    private InventoryRepository inventoryRepository;
 
     @Mock
+    private InventoryRepository inventoryRepository;
+
     private GetInventory getInventory;
 
-    @BeforeAll
-    public static void setup() {
+    private ArrayList<Inventory> list = new ArrayList<>();
+
+    public GetInventoryTests() {
+        MockitoAnnotations.openMocks(this);
+        getInventory = new GetInventory(inventoryRepository);
+
+        list.add(new Inventory());
     }
 
     @Test
     public void GetInventoryTests_ReturnSuccess() {
-        // arrange
-        when(inventoryRepository.findAll())
-        .thenReturn(new ArrayList());
+        // Arrange
+        when(inventoryRepository.findAll()).thenReturn(list);
 
-        // act
-        List<Inventory> expectedResult = getInventory.execute();
+        // Act
+        List<Inventory> expectedResult = getInventory.execute(Optional.empty());
 
-        // assert
-        Assert.isTrue(expectedResult.size() == 1, "should more than 1");
+        // Assert
+        Assert.isTrue(expectedResult.size() > 0, "should more than 0");
 
-        // verify
+        // Verify
         verify(inventoryRepository, times(1)).findAll();
     }
 }
