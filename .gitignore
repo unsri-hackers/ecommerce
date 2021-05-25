@@ -32,4 +32,7 @@ hs_err_pid*
 # Ignore all local history of files
 **/.history
 
+### Intellij Idea ###
+.idea/*
+
 # End of https://www.gitignore.io/api/visualstudiocode
