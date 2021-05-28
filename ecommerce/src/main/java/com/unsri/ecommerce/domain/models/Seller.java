@@ -5,7 +5,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "VENDOR")
-public class Vendor {
+public class Seller {
 
     @Id
     @GeneratedValue
@@ -36,11 +36,11 @@ public class Vendor {
     @Column
     private int vendorType;
 
-    public Vendor() {
+    public Seller() {
 
     }
 
-    public Vendor(
+    public Seller(
         int id,
         String email,
         String password,
