@@ -1,6 +1,6 @@
 package com.unsri.ecommerce.infrastructure.security.jwt;
 
-import com.unsri.ecommerce.infrastructure.security.service.UserDetailsImpl;
+import com.unsri.ecommerce.infrastructure.security.service.SellerDetailsImpl;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,7 @@ public class JwtUtils {
     private long jwtExpirationMs = year * secondInAYear * ms;
 
     public String generateJwt(Authentication authentication) {
-        UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
+        SellerDetailsImpl userPrincipal = (SellerDetailsImpl) authentication.getPrincipal();
 
         return Jwts
             .builder()

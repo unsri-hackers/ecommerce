@@ -25,7 +25,7 @@ public class Seller {
     private String lastName;
 
     @Column
-    private byte avatar;
+    private String avatar;
 
     @Column
     private Date birthDate;
@@ -46,7 +46,7 @@ public class Seller {
         String password,
         String firstName,
         String lastName,
-        byte avatar,
+        String avatar,
         Date birthDate,
         String gender,
         int vendorType
@@ -102,11 +102,11 @@ public class Seller {
         this.lastName = lastName;
     }
 
-    public byte getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(byte avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 

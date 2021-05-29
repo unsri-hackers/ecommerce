@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
-public class UserDetailsServiceImpl implements UserDetailsService {
+@Service
+public class SellerDetailsServiceImpl implements UserDetailsService {
     @Autowired
     SellerRepository sellerRepository;
 
@@ -16,6 +18,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Seller seller = sellerRepository.findByEmail(email)
             .orElseThrow(() -> new UsernameNotFoundException("Email is not found"));
 
-        return UserDetailsImpl.build(seller);
+        return SellerDetailsImpl.build(seller);
     }
 }

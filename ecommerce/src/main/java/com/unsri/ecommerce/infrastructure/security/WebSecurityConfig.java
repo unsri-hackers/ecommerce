@@ -1,7 +1,7 @@
 package com.unsri.ecommerce.infrastructure.security;
 
 import com.unsri.ecommerce.infrastructure.security.jwt.AuthTokenFIlter;
-import com.unsri.ecommerce.infrastructure.security.service.UserDetailsServiceImpl;
+import com.unsri.ecommerce.infrastructure.security.service.SellerDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    UserDetailsServiceImpl userDetailsServiceImpl;
+    SellerDetailsServiceImpl sellerDetailsServiceImpl;
 
     @Bean
     public AuthTokenFIlter authenticationJwtTokenFilter() {
@@ -27,7 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder.userDetailsService(userDetailsServiceImpl).passwordEncoder(passwordEncoder());
+        authenticationManagerBuilder.userDetailsService(sellerDetailsServiceImpl).passwordEncoder(passwordEncoder());
     }
 
     @Bean
@@ -37,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    private PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 

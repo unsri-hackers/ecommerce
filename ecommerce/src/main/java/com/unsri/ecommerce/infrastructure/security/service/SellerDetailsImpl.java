@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-public class UserDetailsImpl implements UserDetails {
+public class SellerDetailsImpl implements UserDetails {
 
     private int id;
 
@@ -21,18 +21,18 @@ public class UserDetailsImpl implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(int id, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    public SellerDetailsImpl(int id, String email, String password, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
     }
 
-    public static UserDetailsImpl build(Seller seller) {
+    public static SellerDetailsImpl build(Seller seller) {
         List<GrantedAuthority> authorities =
-            AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER"); // Temporary
+            AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_ADMIN"); // Temporary
 
-        return new UserDetailsImpl(
+        return new SellerDetailsImpl(
             seller.getId(),
             seller.getEmail(),
             seller.getPassword(),
@@ -65,17 +65,17 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
@@ -93,7 +93,7 @@ public class UserDetailsImpl implements UserDetails {
             return false;
         }
 
-        UserDetailsImpl userDetailsImpl = (UserDetailsImpl) obj;
-        return Objects.equals(id, userDetailsImpl.id);
+        SellerDetailsImpl sellerDetailsImpl = (SellerDetailsImpl) obj;
+        return Objects.equals(id, sellerDetailsImpl.id);
     }
 }

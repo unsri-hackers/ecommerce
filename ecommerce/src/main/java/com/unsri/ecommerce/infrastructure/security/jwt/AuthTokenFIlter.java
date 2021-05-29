@@ -1,6 +1,6 @@
 package com.unsri.ecommerce.infrastructure.security.jwt;
 
-import com.unsri.ecommerce.infrastructure.security.service.UserDetailsServiceImpl;
+import com.unsri.ecommerce.infrastructure.security.service.SellerDetailsServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class AuthTokenFIlter extends OncePerRequestFilter {
     private JwtUtils jwtUtils;
 
     @Autowired
-    private UserDetailsServiceImpl userDetailsServiceImpl;
+    private SellerDetailsServiceImpl sellerDetailsServiceImpl;
 
     private static final Logger logger = LoggerFactory.getLogger(AuthTokenFIlter.class);
 
@@ -36,7 +36,7 @@ public class AuthTokenFIlter extends OncePerRequestFilter {
             if (jwt != null && jwtUtils.validateJwt(jwt)) {
                 String email = jwtUtils.getEmailFromJwt(jwt);
 
-                UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(email);
+                UserDetails userDetails = sellerDetailsServiceImpl.loadUserByUsername(email);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                     userDetails, null, userDetails.getAuthorities()
                     );
