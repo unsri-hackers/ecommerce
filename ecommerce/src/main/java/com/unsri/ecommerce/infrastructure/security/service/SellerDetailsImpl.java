@@ -12,17 +12,20 @@ import java.util.Objects;
 
 public class SellerDetailsImpl implements UserDetails {
 
-    private int id;
+    private final int id;
 
-    private String email;
+    private final String username;
+
+    private final String email;
 
     @JsonIgnore
-    private String password;
+    private final String password;
 
-    private Collection<? extends GrantedAuthority> authorities;
+    private final Collection<? extends GrantedAuthority> authorities;
 
-    public SellerDetailsImpl(int id, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    public SellerDetailsImpl(int id, String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
+        this.username = username;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
@@ -34,6 +37,7 @@ public class SellerDetailsImpl implements UserDetails {
 
         return new SellerDetailsImpl(
             seller.getId(),
+            seller.getUsername(),
             seller.getEmail(),
             seller.getPassword(),
             authorities
@@ -60,7 +64,7 @@ public class SellerDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return null;
+        return username;
     }
 
     @Override

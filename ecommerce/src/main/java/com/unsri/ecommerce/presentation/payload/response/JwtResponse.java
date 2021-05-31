@@ -1,4 +1,4 @@
-package com.unsri.ecommerce.presentation.controllers.payload.response;
+package com.unsri.ecommerce.presentation.payload.response;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ public class JwtResponse {
     private int id;
     private String username;
     private String email;
-    private List<String> roles;
+    private final List<String> roles;
 
     public JwtResponse(String accessToken, int id, String username, String email, List<String> roles) {
         this.token = accessToken;

@@ -14,22 +14,22 @@ public class JwtUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-    private String jwtSecret = "_123xovued321_";
+    private final String jwtSecret = "_123xovued321_";
 
     private static final long secondInAYear = 31556952;
 
     private static final long ms = 1000;
 
-    private long year = 50;
+    private final long year = 50;
 
-    private long jwtExpirationMs = year * secondInAYear * ms;
+    private final long jwtExpirationMs = year * secondInAYear * ms;
 
     public String generateJwt(Authentication authentication) {
         SellerDetailsImpl userPrincipal = (SellerDetailsImpl) authentication.getPrincipal();
 
         return Jwts
             .builder()
-            .setSubject((userPrincipal.getUsername()))
+            .setSubject((userPrincipal.getEmail()))
             .setIssuedAt(new Date())
             .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs)).signWith(SignatureAlgorithm.HS512, jwtSecret)
             .compact();

@@ -1,4 +1,4 @@
-package com.unsri.ecommerce.presentation.controllers.payload.request;
+package com.unsri.ecommerce.presentation.payload.request;
 
 public class LoginRequest {
 

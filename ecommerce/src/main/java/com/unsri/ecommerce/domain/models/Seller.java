@@ -19,6 +19,9 @@ public class Seller {
     private String password;
 
     @Column
+    private String username;
+
+    @Column
     private String firstName;
 
     @Column
@@ -40,8 +43,20 @@ public class Seller {
 
     }
 
+    public Seller(String username, String email) {
+        this.username = username;
+        this.email = email;
+    }
+
+    public Seller(int id, String username, String email) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+    }
+
     public Seller(
         int id,
+        String username,
         String email,
         String password,
         String firstName,
@@ -52,6 +67,7 @@ public class Seller {
         int vendorType
     ) {
         this.id = id;
+        this.username = username;
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -68,6 +84,14 @@ public class Seller {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
