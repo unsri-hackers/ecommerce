@@ -28,12 +28,12 @@ public class CreateInventoryTests {
     @Test
     public void CreateInventoryTests_ReturnSuccess() {
         // Arrange
-
         Inventory inventory = new Inventory();
         inventory.setItemName("Apple");
         inventory.setPrice(1000.0);
 
         when(inventoryRepository.save(inventory)).thenReturn(inventory);
+
         // Act
         Inventory expectedResult = createInventory.execute(java.util.Optional.of(inventory));
 
