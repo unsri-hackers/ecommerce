@@ -4,6 +4,7 @@ import com.unsri.ecommerce.infrastructure.security.service.SellerDetailsImpl;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +15,8 @@ public class JwtUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-    private final String jwtSecret = "_123xovued321_";
+    @Value("${jwt.secret}")
+    private String jwtSecret;
 
     private static final long secondInAYear = 31556952;
 

@@ -1,6 +1,6 @@
 package com.unsri.ecommerce.infrastructure.security;
 
-import com.unsri.ecommerce.infrastructure.security.jwt.AuthTokenFIlter;
+import com.unsri.ecommerce.infrastructure.security.jwt.AuthTokenFilter;
 import com.unsri.ecommerce.infrastructure.security.service.SellerDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -21,8 +21,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     SellerDetailsServiceImpl sellerDetailsServiceImpl;
 
     @Bean
-    public AuthTokenFIlter authenticationJwtTokenFilter() {
-        return new AuthTokenFIlter();
+    public AuthTokenFilter authenticationJwtTokenFilter() {
+        return new AuthTokenFilter();
     }
 
     @Override
