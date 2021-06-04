@@ -4,7 +4,6 @@ import com.unsri.ecommerce.application.behaviours.BaseCommand;
 import com.unsri.ecommerce.infrastructure.security.jwt.JwtUtils;
 import com.unsri.ecommerce.infrastructure.security.service.SellerDetailsImpl;
 import com.unsri.ecommerce.presentation.payload.response.JwtResponse;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class LoginSeller implements BaseCommand<ResponseEntity> {
+public class LoginSeller implements BaseCommand<JwtResponse> {
 
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
@@ -29,7 +28,7 @@ public class LoginSeller implements BaseCommand<ResponseEntity> {
     }
 
     @Override
-    public ResponseEntity execute(Optional<ResponseEntity> param) {
+    public JwtResponse execute(Optional<JwtResponse> param) {
         Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(email, password));
 
@@ -41,11 +40,11 @@ public class LoginSeller implements BaseCommand<ResponseEntity> {
             .map(item -> item.getAuthority())
             .collect(Collectors.toList());
 
-        return ResponseEntity.ok(new JwtResponse(
+        return new JwtResponse(
             jwt,
             sellerDetails.getId(),
             sellerDetails.getUsername(),
             sellerDetails.getEmail(),
-            roles));
+            roles);
     }
 }
