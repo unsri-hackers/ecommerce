@@ -5,3 +5,24 @@ CREATE TABLE INVENTORY (
   item_name VARCHAR(250) NOT NULL,
   price NUMERIC NOT NULL
 );
+
+CREATE TYPE GENDER as ENUM('L', 'P');
+
+CREATE TABLE SELLER (
+	id SERIAL PRIMARY KEY,
+	email VARCHAR(50) NOT NULL,
+	password VARCHAR NOT NULL,
+	username VARCHAR(50) NOT NULL,
+	first_name VARCHAR(100) NOT NULL,
+	last_name VARCHAR(100) NOT NULL,
+	avatar BYTEA,
+	birth_date DATE NOT NULL,
+	gender GENDER NOT NULL,
+	vendor_type INTEGER NOT NULL
+);
+
+CREATE TABLE public.role
+(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR NOT NULL
+);
