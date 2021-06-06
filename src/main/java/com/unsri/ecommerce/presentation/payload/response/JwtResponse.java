@@ -1,5 +1,7 @@
 package com.unsri.ecommerce.presentation.payload.response;
 
+import io.jsonwebtoken.Jwt;
+
 import java.util.List;
 
 public class JwtResponse {
@@ -9,7 +11,7 @@ public class JwtResponse {
     private int id;
     private String username;
     private String email;
-    private final List<String> roles;
+    private List<String> roles;
 
     public JwtResponse(String accessToken, int id, String username, String email, List<String> roles) {
         this.token = accessToken;
@@ -17,6 +19,13 @@ public class JwtResponse {
         this.username = username;
         this.email = email;
         this.roles = roles;
+    }
+
+    public JwtResponse(String accessToken, int id, String username, String email) {
+        this.token = accessToken;
+        this.id = id;
+        this.username = username;
+        this.email = email;
     }
 
     public String getAccessToken() {

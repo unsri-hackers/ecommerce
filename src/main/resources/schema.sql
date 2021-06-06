@@ -17,7 +17,7 @@ CREATE TABLE SELLER (
 	last_name VARCHAR(100) NOT NULL,
 	avatar BYTEA,
 	birth_date DATE NOT NULL,
-	gender GENDER NOT NULL,
+	gender VARCHAR(1) NOT NULL,
 	vendor_type INTEGER NOT NULL
 );
 

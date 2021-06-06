@@ -55,7 +55,6 @@ public class Seller {
     }
 
     public Seller(
-        int id,
         String username,
         String email,
         String password,
@@ -66,7 +65,6 @@ public class Seller {
         String gender,
         int vendorType
     ) {
-        this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
