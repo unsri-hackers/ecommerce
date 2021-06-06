@@ -36,15 +36,12 @@ public class LoginSeller implements BaseCommand<JwtResponse> {
         String jwt = jwtUtils.generateJwt(authentication);
 
         SellerDetailsImpl sellerDetails = (SellerDetailsImpl) authentication.getPrincipal();
-        List<String> roles = sellerDetails.getAuthorities().stream()
-            .map(item -> item.getAuthority())
-            .collect(Collectors.toList());
 
         return new JwtResponse(
             jwt,
             sellerDetails.getId(),
             sellerDetails.getUsername(),
-            sellerDetails.getEmail(),
-            roles);
+            sellerDetails.getEmail()
+        );
     }
 }

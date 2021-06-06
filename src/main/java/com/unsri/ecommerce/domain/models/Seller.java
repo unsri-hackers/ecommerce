@@ -39,6 +39,12 @@ public class Seller {
     @Column
     private int vendorType;
 
+    @Column
+    private boolean isActivated;
+
+    @Column
+    private String verificationCode;
+
     public Seller() {
 
     }
@@ -63,7 +69,8 @@ public class Seller {
         String avatar,
         Date birthDate,
         String gender,
-        int vendorType
+        int vendorType,
+        boolean isActivated
     ) {
         this.username = username;
         this.email = email;
@@ -74,6 +81,7 @@ public class Seller {
         this.birthDate = birthDate;
         this.gender = gender;
         this.vendorType = vendorType;
+        this.isActivated = isActivated;
     }
 
     public int getId() {
@@ -154,5 +162,21 @@ public class Seller {
 
     public void setVendorType(int vendorType) {
         this.vendorType = vendorType;
+    }
+
+    public boolean getIsActivated() {
+        return isActivated;
+    }
+
+    public void setIsActivated(boolean isActivated) {
+        this.isActivated = isActivated;
+    }
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
     }
 }

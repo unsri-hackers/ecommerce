@@ -1,7 +1,5 @@
 package com.unsri.ecommerce.presentation.payload.response;
 
-import com.unsri.ecommerce.infrastructure.security.jwt.JwtUtils;
-
 public class RegisterResponse {
 
     private JwtResponse jwtResponse;
