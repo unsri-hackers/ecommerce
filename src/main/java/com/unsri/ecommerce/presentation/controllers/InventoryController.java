@@ -25,13 +25,13 @@ public class InventoryController {
         _InventoryRepository = inventoryRepository;
     }
 
-    @GetMapping("/inventories")
+    @GetMapping("api/v1/storefront/products")
     public List<Inventory> getInventory() {
         GetInventory command = new GetInventory(_InventoryRepository);
         return command.execute(Optional.empty());
     }
 
-    @GetMapping(value = "/inventories/paging/keyword")
+    @GetMapping(value = "api/v1/storefront/products/paging/keyword")
     public List<Inventory> getInventoriesPaginatedByKeyword(
         @RequestParam(value = "search") String keyword,
         @RequestParam(value = "page", defaultValue = "0") int page,
@@ -42,7 +42,7 @@ public class InventoryController {
         return command.execute(Optional.empty());
     }
 
-    @GetMapping(value = "/inventories/paging")
+    @GetMapping(value = "api/v1/storefront/products/paging")
     public List<Inventory> getInventoriesPaginated(
         @RequestParam(value = "page") int page,
         @RequestParam(value = "size", defaultValue = "10") int size
@@ -52,13 +52,13 @@ public class InventoryController {
         return command.execute(Optional.empty()).getContent();
     }
 
-    @PostMapping(value = "/inventories")
-    public Inventory addItem(@RequestBody Inventory item) {
+    @PostMapping(value = "/api/v1/storefront/products")
+    public Inventory addInventory(@RequestBody Inventory item) {
         CreateInventory command = new CreateInventory(_InventoryRepository);
         return command.execute(Optional.ofNullable(item));
     }
 
-    @PutMapping("/inventories/{id}")
+    @PutMapping("/api/v1/storefront/products/{id}")
     Inventory updateInventory(@PathVariable int id, @RequestBody Inventory newInventory) {
         UpdateInventory command = new UpdateInventory(id, _InventoryRepository);
         return command.execute(Optional.ofNullable(newInventory));
