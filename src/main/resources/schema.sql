@@ -18,11 +18,22 @@ CREATE TABLE SELLER (
 	avatar BYTEA,
 	birth_date DATE NOT NULL,
 	gender VARCHAR(1) NOT NULL,
-	vendor_type INTEGER NOT NULL
+	vendor_type INTEGER NOT NULL,
+	is_activated boolean NOT NULL,
+	verification_code VARCHAR(64)
 );
 
-CREATE TABLE public.role
+CREATE TABLE role
 (
     id SERIAL PRIMARY KEY,
     name VARCHAR NOT NULL
+);
+
+CREATE TABLE jwt_user
+(
+    id SERIAL PRIMARY KEY NOT NULL,
+    user_id SERIAL PRIMARY KEY NOT NULL,
+    device_id VARCHAR NOT NULL,
+    jwt VARCHAR NOT NULL,
+    is_invalidated boolean NOT NULL
 );

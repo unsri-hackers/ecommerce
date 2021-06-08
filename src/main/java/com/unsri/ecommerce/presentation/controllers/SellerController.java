@@ -1,9 +1,11 @@
 package com.unsri.ecommerce.presentation.controllers;
 
 import com.unsri.ecommerce.application.behaviours.seller.commands.LoginSeller;
+import com.unsri.ecommerce.application.behaviours.seller.commands.LogoutSeller;
 import com.unsri.ecommerce.application.behaviours.seller.commands.RegisterSeller;
 import com.unsri.ecommerce.application.behaviours.seller.query.VerifySeller;
 import com.unsri.ecommerce.domain.models.Seller;
+import com.unsri.ecommerce.infrastructure.repository.JwtUserRepository;
 import com.unsri.ecommerce.infrastructure.repository.SellerRepository;
 import com.unsri.ecommerce.infrastructure.security.jwt.JwtUtils;
 import com.unsri.ecommerce.infrastructure.security.service.SellerDetailsServiceImpl;
@@ -33,6 +35,9 @@ public class SellerController {
     SellerRepository sellerRepository;
 
     @Autowired
+    JwtUserRepository jwtUserRepository;
+
+    @Autowired
     SellerDetailsServiceImpl sellerDetailsServiceImpl;
 
     @Autowired
@@ -46,10 +51,11 @@ public class SellerController {
 
     @PostMapping("/api/v1/login")
     @ResponseBody
-    public BaseResponse<JwtResponse> authenticateUser(@RequestBody LoginRequest loginRequest) {
+    public BaseResponse<JwtResponse> authenticateUser(@RequestHeader("Device-Id") String deviceId, @RequestBody LoginRequest loginRequest) {
         LoginSeller command = new LoginSeller(
             authenticationManager,
             jwtUtils,
+            deviceId,
             loginRequest.getUsername(),
             loginRequest.getPassword()
         );
@@ -91,6 +97,20 @@ public class SellerController {
     public BaseResponse<String> verifyUser(@Param("code") String code)
         throws UnsupportedEncodingException, MessagingException {
         VerifySeller command = new VerifySeller(sellerRepository, code);
+
+        String message = command.execute(Optional.empty());
+
+        BaseResponse<String> baseResponse = new BaseResponse<>();
+        baseResponse.setResult(null);
+        baseResponse.setStatusCode(HttpStatus.OK.toString().substring(4));
+        baseResponse.setMessage(message);
+
+        return baseResponse;
+    }
+
+    @PostMapping("/api/v1/logout")
+    public BaseResponse<String> logoutUser(@RequestHeader("Authorization") String jwt) {
+        LogoutSeller command = new LogoutSeller(jwtUserRepository, jwt.substring(7));
 
         String message = command.execute(Optional.empty());
 

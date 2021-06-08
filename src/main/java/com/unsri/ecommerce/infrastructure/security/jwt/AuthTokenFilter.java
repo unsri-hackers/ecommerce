@@ -33,7 +33,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         try {
             String jwt = parseJwt(request);
 
-            if (jwt != null && jwtUtils.validateJwt(jwt)) {
+            if (jwt != null && jwtUtils.validateJwt(jwt) && !jwtUtils.isBlocked(jwt)) {
                 String email = jwtUtils.getEmailFromJwt(jwt);
 
                 UserDetails userDetails = sellerDetailsServiceImpl.loadUserByUsername(email);

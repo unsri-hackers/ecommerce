@@ -1,19 +1,26 @@
 package com.unsri.ecommerce.infrastructure.security.jwt;
 
+import com.unsri.ecommerce.domain.models.JwtUser;
+import com.unsri.ecommerce.infrastructure.repository.JwtUserRepository;
 import com.unsri.ecommerce.infrastructure.security.service.SellerDetailsImpl;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Component
 public class JwtUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
+
+    @Autowired
+    JwtUserRepository jwtUserRepository;
 
     @Value("${jwt.secret}")
     private String jwtSecret;
@@ -60,4 +67,29 @@ public class JwtUtils {
         return false;
     }
 
+    public void saveJwtUser(String jwt, String deviceId, SellerDetailsImpl sellerDetails) {
+        JwtUser jwtUser = jwtUserRepository.findByUserAndDeviceId(sellerDetails.getId(), deviceId);
+
+        if (jwtUser == null) {
+            JwtUser newJwtUser = new JwtUser(
+                sellerDetails.getId(),
+                deviceId,
+                jwt,
+                false
+            );
+
+            jwtUserRepository.save(newJwtUser);
+        } else {
+            if (jwtUser.isInvalidated()) {
+                jwtUser.setJwt(jwt);
+                jwtUser.setInvalidated(false);
+                jwtUserRepository.save(jwtUser);
+            }
+        }
+    }
+
+    public boolean isBlocked(String jwt) {
+        Optional<JwtUser> jwtUser = jwtUserRepository.findByJwt(jwt);
+        return jwtUser.get().isInvalidated();
+    }
 }
