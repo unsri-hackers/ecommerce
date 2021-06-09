@@ -13,7 +13,5 @@ import java.util.Optional;
 public interface SellerRepository extends JpaRepository<Seller, Integer> {
     Optional<Seller> findByEmail(String email);
     Boolean existsByEmail(String email);
-
-    @Query("SELECT s FROM Seller s WHERE verificationCode = ?1")
     Seller findByVerificationCode(String code);
 }

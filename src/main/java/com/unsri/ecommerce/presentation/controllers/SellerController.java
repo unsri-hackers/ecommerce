@@ -87,7 +87,7 @@ public class SellerController {
 
         BaseResponse<JwtResponse> baseResponse = new BaseResponse<>();
         baseResponse.setResult(registerResponse.getJwtResponse());
-        baseResponse.setStatusCode(registerResponse.getCode().substring(4));
+        baseResponse.setStatusCode(registerResponse.getStatusCode().substring(4));
         baseResponse.setMessage(registerResponse.getMessage());
 
         return baseResponse;

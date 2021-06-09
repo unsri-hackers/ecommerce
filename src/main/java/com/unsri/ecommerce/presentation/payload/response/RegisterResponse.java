@@ -4,12 +4,12 @@ public class RegisterResponse {
 
     private JwtResponse jwtResponse;
     private String message;
-    private String code;
+    private String statusCode;
 
-    public RegisterResponse(JwtResponse jwtResponse, String message, String code) {
+    public RegisterResponse(JwtResponse jwtResponse, String message, String statusCode) {
         this.jwtResponse = jwtResponse;
         this.message = message;
-        this.code = code;
+        this.statusCode = statusCode;
     }
 
     public JwtResponse getJwtResponse() {
@@ -28,12 +28,12 @@ public class RegisterResponse {
         this.message = message;
     }
 
-    public String getCode() {
-        return code;
+    public String getStatusCode() {
+        return statusCode;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
     }
 
 }
