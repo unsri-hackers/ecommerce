@@ -8,9 +8,9 @@ public class BaseResponse<T> {
     public BaseResponse() {}
 
     public BaseResponse(T result, String statusCode, String message) {
-        result = result;
-        statusCode = statusCode;
-        message = message;
+        this.result = result;
+        this.statusCode = statusCode;
+        this.message = message;
     }
 
     public void setResult(T result) {
