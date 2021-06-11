@@ -12,7 +12,7 @@ import com.unsri.ecommerce.domain.models.Inventory;
 import com.unsri.ecommerce.domain.models.InventoryResponse;
 import com.unsri.ecommerce.infrastructure.repository.InventoryRepository;
 
-import com.unsri.ecommerce.infrastructure.security.jwt.JwtUtils;
+import com.unsri.ecommerce.infrastructure.webconfig.jwt.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

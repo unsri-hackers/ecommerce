@@ -1,12 +1,11 @@
 package com.unsri.ecommerce.presentation.controllers;
 
 import com.unsri.ecommerce.application.behaviours.seller.commands.LoginSeller;
-import com.unsri.ecommerce.infrastructure.security.jwt.JwtUtils;
+import com.unsri.ecommerce.infrastructure.webconfig.jwt.JwtUtils;
 import com.unsri.ecommerce.presentation.payload.request.LoginRequest;
 import com.unsri.ecommerce.presentation.payload.response.JwtResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

@@ -1,4 +1,4 @@
-package com.unsri.ecommerce.infrastructure.security.service;
+package com.unsri.ecommerce.infrastructure.webconfig.service;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.unsri.ecommerce.domain.models.Seller;
