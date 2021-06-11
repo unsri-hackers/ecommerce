@@ -1,5 +1,6 @@
 package com.unsri.ecommerce.application.behaviours.seller.commands;
 
+import com.unsri.ecommerce.domain.models.Inventory;
 import com.unsri.ecommerce.domain.models.Seller;
 import com.unsri.ecommerce.infrastructure.repository.SellerRepository;
 import com.unsri.ecommerce.infrastructure.security.jwt.JwtUtils;
@@ -20,6 +21,7 @@ import org.springframework.util.Assert;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Optional;
@@ -56,6 +58,7 @@ public class RegisterSellerTests {
         MockitoAnnotations.openMocks(this);
 
         seller = new Seller(
+                1,
             "test@email.com",
             "test@email.com",
             "test12345",
@@ -65,7 +68,8 @@ public class RegisterSellerTests {
             new Date(),
             "L",
             1,
-            false
+                new ArrayList<Inventory>(),
+                false
         );
 
         registerSeller = new RegisterSeller(
