@@ -2,6 +2,7 @@ package com.unsri.ecommerce.domain.models;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "SELLER")
@@ -10,7 +11,7 @@ public class Seller {
     @Id
     @GeneratedValue
     @Column
-    private int id;
+    private Integer id;
 
     @Column
     private String email;
@@ -36,35 +37,27 @@ public class Seller {
     @Column
     private String gender;
 
-    @Column
-    private int vendorType;
+    @Column(name = "vendor_type")
+    private Integer type;
 
-    public Seller() {
+    @OneToMany(targetEntity = Inventory.class)
+    @JoinColumn(name = "fk_seller_id", referencedColumnName = "id")
+    private List<Inventory> inventories;
 
-    }
-
-    public Seller(String username, String email) {
-        this.username = username;
-        this.email = email;
-    }
-
-    public Seller(int id, String username, String email) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-    }
+    public Seller() { }
 
     public Seller(
-        int id,
-        String username,
-        String email,
-        String password,
-        String firstName,
-        String lastName,
-        String avatar,
-        Date birthDate,
-        String gender,
-        int vendorType
+            Integer id,
+            String username,
+            String email,
+            String password,
+            String firstName,
+            String lastName,
+            String avatar,
+            Date birthDate,
+            String gender,
+            Integer type,
+            List<Inventory> inventories
     ) {
         this.id = id;
         this.username = username;
@@ -75,14 +68,15 @@ public class Seller {
         this.avatar = avatar;
         this.birthDate = birthDate;
         this.gender = gender;
-        this.vendorType = vendorType;
+        this.type = type;
+        this.inventories = inventories;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -150,11 +144,19 @@ public class Seller {
         this.gender = gender;
     }
 
-    public int getVendorType() {
-        return vendorType;
+    public Integer getType() {
+        return type;
     }
 
-    public void setVendorType(int vendorType) {
-        this.vendorType = vendorType;
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public List<Inventory> getInventories() {
+        return inventories;
+    }
+
+    public void setInventories(List<Inventory> inventories) {
+        this.inventories = inventories;
     }
 }

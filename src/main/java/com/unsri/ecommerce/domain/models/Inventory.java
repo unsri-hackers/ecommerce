@@ -1,10 +1,7 @@
 package com.unsri.ecommerce.domain.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "INVENTORY")
@@ -21,19 +18,22 @@ public class Inventory {
     @Column
     private Double price;
 
+    @Column(name = "fk_seller_id")
+    private Integer fkSellerId;
+
+    @OneToMany(targetEntity = PhotoInventory.class)
+    @JoinColumn(name = "fk_inventory_id", referencedColumnName = "id")
+    private List<PhotoInventory> photoInventories;
+
     public Inventory() {
 
     }
 
-    public Inventory(int id, String itemName, Double price) {
-        this.id = id;
+    public Inventory(String itemName, Double price, Integer fkSellerId, List<PhotoInventory> photoInventories) {
         this.itemName = itemName;
         this.price = price;
-    }
-
-    public Inventory(String itemName, Double price) {
-        this.itemName = itemName;
-        this.price = price;
+        this.fkSellerId = fkSellerId;
+        this.photoInventories = photoInventories;
     }
 
     public int getId() {
@@ -58,5 +58,21 @@ public class Inventory {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Integer getFkSellerId() {
+        return fkSellerId;
+    }
+
+    public void setFkSellerId(Integer sellerId) {
+        this.fkSellerId = sellerId;
+    }
+
+    public List<PhotoInventory> getPhotos() {
+        return photoInventories;
+    }
+
+    public void setPhotos(List<PhotoInventory> photoInventories) {
+        this.photoInventories = photoInventories;
     }
 }
