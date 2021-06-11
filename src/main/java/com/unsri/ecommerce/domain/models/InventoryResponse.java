@@ -9,18 +9,18 @@ public class InventoryResponse {
     private Integer productId;
     private String productName;
     private Double price;
-    private List<Photo> photos;
+    private List<PhotoInventory> photoInventories;
 
     public InventoryResponse() {
     }
 
-    public InventoryResponse(Integer sellerId, String sellerName, Integer productId, String productName, Double price, List<Photo> photos) {
+    public InventoryResponse(Integer sellerId, String sellerName, Integer productId, String productName, Double price, List<PhotoInventory> photoInventories) {
         this.sellerId = sellerId;
         this.sellerName = sellerName;
         this.productId = productId;
         this.productName = productName;
         this.price = price;
-        this.photos = photos;
+        this.photoInventories = photoInventories;
     }
 
     public String getSellerName() {
@@ -47,12 +47,12 @@ public class InventoryResponse {
         this.productName = productName;
     }
 
-    public List<Photo> getPhotos() {
-        return photos;
+    public List<PhotoInventory> getPhotos() {
+        return photoInventories;
     }
 
-    public void setPhotos(List<Photo> photos) {
-        this.photos = photos;
+    public void setPhotos(List<PhotoInventory> photoInventories) {
+        this.photoInventories = photoInventories;
     }
 
     public Double getPrice() {
@@ -70,7 +70,7 @@ public class InventoryResponse {
                 "vendor_name=" + sellerName + "," +
                 "product_id=" + productId + "," +
                 "product_name=" + productName + "," +
-                "photos=" + photos +
+                "photoInventories=" + photoInventories +
                 '}';
     }
 }

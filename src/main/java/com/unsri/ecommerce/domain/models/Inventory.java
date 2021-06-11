@@ -21,30 +21,19 @@ public class Inventory {
     @Column(name = "fk_seller_id")
     private Integer fkSellerId;
 
-    @OneToMany(targetEntity = Photo.class)
+    @OneToMany(targetEntity = PhotoInventory.class)
     @JoinColumn(name = "fk_inventory_id", referencedColumnName = "id")
-    private List<Photo> photos;
+    private List<PhotoInventory> photoInventories;
 
     public Inventory() {
 
     }
 
-    public Inventory(String itemName, Double price) {
-        this.itemName = itemName;
-        this.price = price;
-    }
-
-    public Inventory(String itemName, Double price, Integer fkSellerId) {
+    public Inventory(String itemName, Double price, Integer fkSellerId, List<PhotoInventory> photoInventories) {
         this.itemName = itemName;
         this.price = price;
         this.fkSellerId = fkSellerId;
-    }
-
-    public Inventory(String itemName, Double price, Integer fkSellerId, List<Photo> photos) {
-        this.itemName = itemName;
-        this.price = price;
-        this.fkSellerId = fkSellerId;
-        this.photos = photos;
+        this.photoInventories = photoInventories;
     }
 
     public int getId() {
@@ -79,11 +68,11 @@ public class Inventory {
         this.fkSellerId = sellerId;
     }
 
-    public List<Photo> getPhotos() {
-        return photos;
+    public List<PhotoInventory> getPhotos() {
+        return photoInventories;
     }
 
-    public void setPhotos(List<Photo> photos) {
-        this.photos = photos;
+    public void setPhotos(List<PhotoInventory> photoInventories) {
+        this.photoInventories = photoInventories;
     }
 }

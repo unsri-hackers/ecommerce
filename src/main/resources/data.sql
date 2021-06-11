@@ -1,6 +1,6 @@
-INSERT INTO INVENTORY (id, item_name, price) VALUES (1, 'Microsoft Surface', 10.00);
-INSERT INTO INVENTORY (id, item_name, price) VALUES (1, 'Macbook Pro', 10.20);
-INSERT INTO INVENTORY (id, item_name, price) VALUES (1, 'Macbook Air', 10.30);
+INSERT INTO INVENTORY (id, item_name, price, fk_seller_id) VALUES (1, 'Microsoft Surface', 10.00, 1);
+INSERT INTO INVENTORY (id, item_name, price, fk_seller_id) VALUES (2, 'Macbook Pro', 10.20, 1);
+INSERT INTO INVENTORY (id, item_name, price, fk_seller_id) VALUES (3, 'Macbook Air', 10.30, 1);
 
 INSERT INTO SELLER (email, password, first_name, last_name, avatar, birth_date, gender, vendor_type, username)
     VALUES (
@@ -15,8 +15,14 @@ INSERT INTO SELLER (email, password, first_name, last_name, avatar, birth_date, 
         'test@email.com'
     );
 
-INSERT INTO SELLER (path, name)
+INSERT INTO PHOTO_INVENTORY (path, name)
     VALUES (
         'www.google.com',
         'foto item'
     );
+
+INSERT INTO PHOTO_SELLER(path, name)
+    VALUES (
+        'www.google.com',
+        'foto seller'
+    )

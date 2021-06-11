@@ -7,10 +7,11 @@ import com.unsri.ecommerce.application.behaviours.inventory.commands.CreateInven
 import com.unsri.ecommerce.application.behaviours.inventory.commands.UpdateInventory;
 import com.unsri.ecommerce.application.behaviours.inventory.queries.GetInventory;
 import com.unsri.ecommerce.application.behaviours.inventory.queries.GetInventoriesPaginatedByItemName;
-import com.unsri.ecommerce.application.behaviours.seller.commands.GetSellerInventories;
+import com.unsri.ecommerce.application.behaviours.inventory.queries.GetSellerInventories;
 import com.unsri.ecommerce.domain.models.Inventory;
 import com.unsri.ecommerce.domain.models.InventoryResponse;
-import com.unsri.ecommerce.domain.models.Photo;
+import com.unsri.ecommerce.domain.models.PhotoInventory;
+import com.unsri.ecommerce.domain.models.Seller;
 import com.unsri.ecommerce.infrastructure.repository.InventoryRepository;
 
 import com.unsri.ecommerce.infrastructure.repository.SellerRepository;
@@ -57,34 +58,29 @@ public class InventoryController {
             @RequestParam(value = "size", defaultValue = "10") int size
     ) {
         Pageable pageable = PageRequest.of(page, size);
+
         GetSellerInventories command = new GetSellerInventories(sellerRepository, sellerType, sellerId, pageable);
         BaseResponse<List<InventoryResponse>> response = new BaseResponse<>();
         List<InventoryResponse> responseHolder = new ArrayList<>();
 
-        // Dummy Photos
-        List<Photo> photos = new ArrayList<>();
-
-        command.execute(Optional.empty()).forEach(seller -> {
-            seller.getInventories().forEach(inventory -> {
-                //Dummy Photo
-                photos.add(new Photo("www.google.com", "google"));
-
-                responseHolder.add(
+        Seller seller = command.execute(Optional.empty());
+        seller.getInventories()
+                .forEach(inventory -> responseHolder.add(
                         new InventoryResponse(
                                 seller.getId(),
                                 seller.getUsername(),
                                 inventory.getId(),
                                 inventory.getItemName(),
                                 inventory.getPrice(),
-                                photos
+                                inventory.getPhotos()
                         )
-                );
-            });
-        });
+                )
+        );
 
         response.setResult(responseHolder);
         response.setStatusCode(HttpStatus.OK.toString());
         response.setMessage("Item dapat " + responseHolder.size());
+
         return response;
     }
 

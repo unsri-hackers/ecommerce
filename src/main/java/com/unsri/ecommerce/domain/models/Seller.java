@@ -44,20 +44,7 @@ public class Seller {
     @JoinColumn(name = "fk_seller_id", referencedColumnName = "id")
     private List<Inventory> inventories;
 
-    public Seller() {
-
-    }
-
-    public Seller(String username, String email) {
-        this.username = username;
-        this.email = email;
-    }
-
-    public Seller(Integer id, String username, String email) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-    }
+    public Seller() { }
 
     public Seller(
             Integer id,
@@ -69,7 +56,8 @@ public class Seller {
             String avatar,
             Date birthDate,
             String gender,
-            Integer vendorType
+            Integer type,
+            List<Inventory> inventories
     ) {
         this.id = id;
         this.username = username;
@@ -80,7 +68,8 @@ public class Seller {
         this.avatar = avatar;
         this.birthDate = birthDate;
         this.gender = gender;
-        this.type = vendorType;
+        this.type = type;
+        this.inventories = inventories;
     }
 
     public Integer getId() {
@@ -159,8 +148,8 @@ public class Seller {
         return type;
     }
 
-    public void setType(Integer vendorType) {
-        this.type = vendorType;
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public List<Inventory> getInventories() {

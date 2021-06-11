@@ -1,4 +1,4 @@
-package com.unsri.ecommerce.application.behaviours.seller.commands;
+package com.unsri.ecommerce.application.behaviours.inventory.queries;
 
 import com.unsri.ecommerce.application.behaviours.BaseCommand;
 import com.unsri.ecommerce.domain.models.Seller;
@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
-public class GetSellerInventories implements BaseCommand<List<Seller>> {
+public class GetSellerInventories implements BaseCommand<Seller> {
 
     private SellerRepository sellerRepository;
 
@@ -24,7 +24,7 @@ public class GetSellerInventories implements BaseCommand<List<Seller>> {
     }
 
     @Override
-    public List<Seller> execute(Optional<List<Seller>> param) {
+    public Seller execute(Optional<Seller> param) {
         return sellerRepository.findSellerByIdAndType(this.sellerId, this.sellerType, this.pageable);
     }
 }

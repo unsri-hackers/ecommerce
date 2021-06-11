@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface SellerRepository extends JpaRepository<Seller, String> {
+public interface SellerRepository extends JpaRepository<Seller, Integer> {
     Optional<Seller> findByEmail(String email);
-    List<Seller> findSellerByIdAndType(Integer sellerId, Integer sellerType, Pageable pageable);
+    Seller findSellerByIdAndType(Integer sellerId, Integer sellerType, Pageable pageable);
 }

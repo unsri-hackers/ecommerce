@@ -3,8 +3,8 @@ package com.unsri.ecommerce.domain.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "PHOTO")
-public class Photo {
+@Table(name = "PHOTO_INVENTORY")
+public class PhotoInventory {
 
     @Id
     @GeneratedValue
@@ -17,14 +17,14 @@ public class Photo {
     @Column
     private String name;
 
-    public Photo() { }
+    public PhotoInventory() { }
 
-    public Photo(String path, String name) {
+    public PhotoInventory(String path, String name) {
         this.path = path;
         this.name = name;
     }
 
-    public Photo(Integer id, String path, String name) {
+    public PhotoInventory(Integer id, String path, String name) {
         this.id = id;
         this.path = path;
         this.name = name;
