@@ -1,8 +1,9 @@
-package com.unsri.ecommerce.infrastructure.security.jwt;
+package com.unsri.ecommerce.infrastructure.webconfig.jwt;
 
+import com.unsri.ecommerce.infrastructure.webconfig.service.SellerDetailsImpl;
 import com.unsri.ecommerce.domain.models.JwtUser;
 import com.unsri.ecommerce.infrastructure.repository.JwtUserRepository;
-import com.unsri.ecommerce.infrastructure.security.service.SellerDetailsImpl;
+import com.unsri.ecommerce.infrastructure.webconfig.service.SellerDetailsImpl;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -7,8 +7,7 @@ import com.unsri.ecommerce.application.behaviours.seller.query.VerifySeller;
 import com.unsri.ecommerce.domain.models.Seller;
 import com.unsri.ecommerce.infrastructure.repository.JwtUserRepository;
 import com.unsri.ecommerce.infrastructure.repository.SellerRepository;
-import com.unsri.ecommerce.infrastructure.security.jwt.JwtUtils;
-import com.unsri.ecommerce.infrastructure.security.service.SellerDetailsServiceImpl;
+import com.unsri.ecommerce.infrastructure.webconfig.jwt.JwtUtils;
 import com.unsri.ecommerce.presentation.payload.request.LoginRequest;
 import com.unsri.ecommerce.presentation.payload.response.JwtResponse;
 import com.unsri.ecommerce.presentation.payload.response.RegisterResponse;
@@ -36,9 +35,6 @@ public class SellerController {
 
     @Autowired
     JwtUserRepository jwtUserRepository;
-
-    @Autowired
-    SellerDetailsServiceImpl sellerDetailsServiceImpl;
 
     @Autowired
     PasswordEncoder encoder;

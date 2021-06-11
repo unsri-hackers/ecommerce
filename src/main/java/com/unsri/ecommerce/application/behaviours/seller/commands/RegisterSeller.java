@@ -3,8 +3,8 @@ package com.unsri.ecommerce.application.behaviours.seller.commands;
 import com.unsri.ecommerce.application.behaviours.BaseCommand;
 import com.unsri.ecommerce.domain.models.Seller;
 import com.unsri.ecommerce.infrastructure.repository.SellerRepository;
-import com.unsri.ecommerce.infrastructure.security.jwt.JwtUtils;
-import com.unsri.ecommerce.infrastructure.security.service.SellerDetailsImpl;
+import com.unsri.ecommerce.infrastructure.webconfig.jwt.JwtUtils;
+import com.unsri.ecommerce.infrastructure.webconfig.service.SellerDetailsImpl;
 import com.unsri.ecommerce.presentation.payload.response.JwtResponse;
 import com.unsri.ecommerce.presentation.payload.response.RegisterResponse;
 import net.bytebuddy.utility.RandomString;
@@ -16,7 +16,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
