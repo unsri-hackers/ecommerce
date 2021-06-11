@@ -1,8 +1,8 @@
 package com.unsri.ecommerce.application.behaviours.seller.commands;
 
 import com.unsri.ecommerce.application.behaviours.BaseCommand;
-import com.unsri.ecommerce.infrastructure.security.jwt.JwtUtils;
-import com.unsri.ecommerce.infrastructure.security.service.SellerDetailsImpl;
+import com.unsri.ecommerce.infrastructure.webconfig.jwt.JwtUtils;
+import com.unsri.ecommerce.infrastructure.webconfig.service.SellerDetailsImpl;
 import com.unsri.ecommerce.presentation.payload.response.JwtResponse;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
