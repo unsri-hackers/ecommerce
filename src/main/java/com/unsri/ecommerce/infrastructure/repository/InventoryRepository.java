@@ -1,6 +1,7 @@
 package com.unsri.ecommerce.infrastructure.repository;
 
 import com.unsri.ecommerce.domain.models.Inventory;
+import com.unsri.ecommerce.domain.models.Seller;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,4 +12,6 @@ import java.util.List;
 @Repository
 public interface InventoryRepository extends JpaRepository<Inventory, Integer> {
     List<Inventory> findAllPaginatedByItemName(String itemName, Pageable pageable);
+
+    List<Inventory> findAllPaginatedByfkSellerId(Integer sellerId, Pageable pageable);
 }
