@@ -86,13 +86,15 @@ public class RegisterSellerTests {
         String email = seller.getEmail();
         String password = seller.getPassword();
 
+        when(encoder.encode(seller.getPassword()))
+                .thenReturn("$2a$10$/PYlcw.8IXqJu8nmrVFKXOBFQCN7JIkEN/gg4WJHB.7T8HDbeJ/Uq");
         seller.setPassword(encoder.encode(seller.getPassword()));
         seller.setIsActivated(false);
         seller.setVerificationCode(RandomString.make(64));
 
         when(sellerRepository.save(seller)).thenReturn(seller);
-        when(authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password)))
-            .thenReturn(authentication);
+        when(authenticationManager.authenticate(any()))
+            .thenReturn(initAuthentication());
 
         // Act
         RegisterResponse expectedResult = registerSeller.execute(Optional.empty());
@@ -102,6 +104,45 @@ public class RegisterSellerTests {
 
         // Verify
         verify(sellerRepository, times(1)).save(seller);
+    }
+
+    private Authentication initAuthentication() {
+        return new Authentication() {
+            @Override
+            public Collection<? extends GrantedAuthority> getAuthorities() {
+                return null;
+            }
+
+            @Override
+            public Object getCredentials() {
+                return null;
+            }
+
+            @Override
+            public Object getDetails() {
+                return null;
+            }
+
+            @Override
+            public Object getPrincipal() {
+                return null;
+            }
+
+            @Override
+            public boolean isAuthenticated() {
+                return false;
+            }
+
+            @Override
+            public void setAuthenticated(boolean b) throws IllegalArgumentException {
+
+            }
+
+            @Override
+            public String getName() {
+                return null;
+            }
+        };
     }
 
 }
