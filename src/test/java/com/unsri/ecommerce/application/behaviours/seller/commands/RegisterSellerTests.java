@@ -85,12 +85,13 @@ public class RegisterSellerTests {
     public void RegisterSellerTests_ShouldReturnRegisterIsSuccess_Success()
         throws UnsupportedEncodingException, MessagingException {
         // Arrange
+        String password = seller.getPassword();
 
         // Save seller to Db
-        when(encoder.encode(seller.getPassword()))
+        when(encoder.encode(password))
             .thenReturn("$2a$10$/PYlcw.8IXqJu8nmrVFKXOBFQCN7JIkEN/gg4WJHB.7T8HDbeJ/Uq");
 
-        seller.setPassword(encoder.encode(seller.getPassword()));
+        seller.setPassword(encoder.encode(password));
         seller.setIsActivated(false);
         seller.setVerificationCode(RandomString.make(64));
 
@@ -124,7 +125,13 @@ public class RegisterSellerTests {
         Assert.isTrue(expectedResult.getStatusCode().substring(4).equals("OK"), "Status code should be OK");
 
         // Verify
+        verify(encoder, times(1)).encode(password);
         verify(sellerRepository, times(1)).save(seller);
+        verify(authenticationManager, times(1)).authenticate(any());
+        verify(jwtUtils, times(1)).generateJwt(any());
+        verify(request, times(1)).getRequestURL();
+        verify(request, times(1)).getServletPath();
+        verify(mailSender, times(1)).createMimeMessage();
     }
 
     private Authentication initAuthentication() {
@@ -160,7 +167,7 @@ public class RegisterSellerTests {
 
             @Override
             public boolean isAuthenticated() {
-                return false;
+                return true;
             }
 
             @Override
