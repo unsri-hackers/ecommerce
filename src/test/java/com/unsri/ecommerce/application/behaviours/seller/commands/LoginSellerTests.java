@@ -19,7 +19,7 @@ import java.util.Optional;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class LoginSellerTest {
+public class LoginSellerTests {
 
     @Mock
     private AuthenticationManager authenticationManager;
@@ -29,7 +29,7 @@ public class LoginSellerTest {
 
     private LoginSeller loginSeller;
 
-    public LoginSellerTest() {
+    public LoginSellerTests() {
         MockitoAnnotations.openMocks(this);
 
         loginSeller = new LoginSeller(

@@ -19,7 +19,7 @@ public class VerifySeller implements BaseCommand<String> {
     }
 
     @Override
-    public String execute(Optional<String> param) throws UnsupportedEncodingException, MessagingException {
+    public String execute(Optional<String> param) {
         Seller seller = sellerRepository.findByVerificationCode(verificationCode);
 
         if (seller == null || seller.getIsActivated()) {
