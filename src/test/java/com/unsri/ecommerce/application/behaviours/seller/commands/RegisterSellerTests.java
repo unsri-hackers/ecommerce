@@ -1,6 +1,5 @@
 package com.unsri.ecommerce.application.behaviours.seller.commands;
 
-import com.unsri.ecommerce.domain.models.Inventory;
 import com.unsri.ecommerce.domain.models.Seller;
 import com.unsri.ecommerce.infrastructure.repository.SellerRepository;
 import com.unsri.ecommerce.infrastructure.webconfig.jwt.JwtUtils;
@@ -83,16 +82,18 @@ public class RegisterSellerTests {
     }
 
     @Test
-    public void RegisterSellerTests_ShouldReturnStatusCodeIsOK_Success()
+    public void RegisterSellerTests_ShouldReturnRegisterIsSuccess_Success()
         throws UnsupportedEncodingException, MessagingException {
         // Arrange
 
         // Save seller to Db
         when(encoder.encode(seller.getPassword()))
             .thenReturn("$2a$10$/PYlcw.8IXqJu8nmrVFKXOBFQCN7JIkEN/gg4WJHB.7T8HDbeJ/Uq");
+
         seller.setPassword(encoder.encode(seller.getPassword()));
         seller.setIsActivated(false);
         seller.setVerificationCode(RandomString.make(64));
+
         when(sellerRepository.save(seller)).thenReturn(seller);
 
         // Authenticate seller
@@ -109,7 +110,18 @@ public class RegisterSellerTests {
         RegisterResponse expectedResult = registerSeller.execute(Optional.empty());
 
         // Assert
-        Assert.isTrue(expectedResult.getStatusCode().substring(4).equals("OK"), "status code should be OK");
+        Assert.isTrue(
+            expectedResult.getJwtResponse().getId() == seller.getId(),
+            "Seller id should match with the requester"
+        );
+        Assert.isTrue(
+            expectedResult.getJwtResponse().getUsername().equals(seller.getUsername()),
+            "Seller username should match with the requester"
+        );
+        Assert.isTrue(
+            expectedResult.getJwtResponse().getUsername().equals(seller.getEmail()),
+            "Seller email should match with the requester");
+        Assert.isTrue(expectedResult.getStatusCode().substring(4).equals("OK"), "Status code should be OK");
 
         // Verify
         verify(sellerRepository, times(1)).save(seller);
@@ -117,7 +129,7 @@ public class RegisterSellerTests {
 
     private Authentication initAuthentication() {
         return new Authentication() {
-            List<GrantedAuthority> authorities =
+            final List<GrantedAuthority> authorities =
                 AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_ADMIN");
 
             @Override
@@ -161,6 +173,25 @@ public class RegisterSellerTests {
                 return null;
             }
         };
+    }
+
+    @Test
+    public void RegisterSellerTests_ShouldReturnEmailIsAlreadyInUse_Success()
+        throws UnsupportedEncodingException, MessagingException {
+        // Arrange
+        when(sellerRepository.existsByEmail(seller.getEmail())).thenReturn(true);
+
+        // Act
+        RegisterResponse expectedResult = registerSeller.execute(Optional.empty());
+
+        // Assert
+        Assert.isTrue(
+            expectedResult.getStatusCode().substring(4).equals("CONFLICT"),
+            "Status code should be CONFLICT"
+        );
+
+        // Verify
+        verify(sellerRepository, times(1)).existsByEmail(seller.getEmail());
     }
 
 }
