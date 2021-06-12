@@ -19,8 +19,10 @@ CREATE TABLE SELLER (
 	last_name VARCHAR(100) NOT NULL,
 	avatar BYTEA,
 	birth_date DATE NOT NULL,
-	gender GENDER NOT NULL,
-	vendor_type INTEGER NOT NULL
+	gender VARCHAR(1) NOT NULL,
+	vendor_type INTEGER NOT NULL,
+	is_activated boolean NOT NULL,
+	verification_code VARCHAR(64)
 );
 
 DROP TABLE IF EXISTS PHOTO_INVENTORY
@@ -39,8 +41,17 @@ CREATE TABLE PHOTO_PROFILE(
     fk_seller_id NUMERIC REFERENCES SELLER(id)
 )
 
-CREATE TABLE public.role
+CREATE TABLE ROLE
 (
     id SERIAL PRIMARY KEY,
     name VARCHAR NOT NULL
+);
+
+CREATE TABLE JWT_USER
+(
+    id SERIAL PRIMARY KEY NOT NULL,
+    user_id SERIAL PRIMARY KEY NOT NULL,
+    device_id VARCHAR NOT NULL,
+    jwt VARCHAR NOT NULL,
+    is_invalidated boolean NOT NULL
 );
