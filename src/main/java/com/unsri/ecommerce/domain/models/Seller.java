@@ -64,7 +64,8 @@ public class Seller {
         String gender,
         Integer type,
         List<Inventory> inventories,
-        boolean isActivated
+        boolean isActivated,
+        String verificationCode
     ) {
         this.id = id;
         this.username = username;
@@ -78,6 +79,7 @@ public class Seller {
         this.type = type;
         this.inventories = inventories;
         this.isActivated = isActivated;
+        this.verificationCode = verificationCode;
     }
 
     public Integer getId() {

@@ -21,6 +21,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class RegisterSeller implements BaseCommand<RegisterResponse> {
@@ -32,6 +33,8 @@ public class RegisterSeller implements BaseCommand<RegisterResponse> {
     private final JwtUtils jwtUtils;
     private final JavaMailSender mailSender;
     private final Seller seller;
+    private final String deviceId;
+    private String jwt;
 
     public RegisterSeller(
         AuthenticationManager authenticationManager,
@@ -40,7 +43,8 @@ public class RegisterSeller implements BaseCommand<RegisterResponse> {
         PasswordEncoder encoder,
         JwtUtils jwtUtils,
         JavaMailSender mailSender,
-        Seller seller
+        Seller seller,
+        String deviceId
     ) {
         this.authenticationManager = authenticationManager;
         this.sellerRepository = sellerRepository;
@@ -49,6 +53,7 @@ public class RegisterSeller implements BaseCommand<RegisterResponse> {
         this.jwtUtils = jwtUtils;
         this.mailSender = mailSender;
         this.seller = seller;
+        this.deviceId = deviceId;
     }
 
     @Override
@@ -65,20 +70,11 @@ public class RegisterSeller implements BaseCommand<RegisterResponse> {
             );
         }
 
-        // Create new seller's account
-        seller.setPassword(encoder.encode(password));
-        seller.setIsActivated(false);
-        seller.setVerificationCode(RandomString.make(64));
-        sellerRepository.save(seller);
+        saveSellerToDb(password);
 
-        // Authenticate user
-        Authentication authentication = authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(email, password));
+        SellerDetailsImpl sellerDetails = authenticateSeller(email, password);
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwt(authentication);
-
-        SellerDetailsImpl sellerDetails = (SellerDetailsImpl) authentication.getPrincipal();
+        jwtUtils.saveJwtUser(jwt, deviceId, sellerDetails);
 
         sendVerificationEmail(seller, getSiteUrl());
 
@@ -92,6 +88,24 @@ public class RegisterSeller implements BaseCommand<RegisterResponse> {
             "Seller is registered successfully. Check your email to activate your account",
             HttpStatus.OK.toString()
         );
+    }
+
+    private void saveSellerToDb(String password) {
+        seller.setPassword(encoder.encode(password));
+        seller.setInventories(new ArrayList<>());
+        seller.setIsActivated(false);
+        seller.setVerificationCode(RandomString.make(64));
+        sellerRepository.save(seller);
+    }
+
+    private SellerDetailsImpl authenticateSeller(String email, String password) {
+        Authentication authentication = authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(email, password));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        jwt = jwtUtils.generateJwt(authentication);
+
+        return (SellerDetailsImpl) authentication.getPrincipal();
     }
 
     private void sendVerificationEmail(Seller seller, String siteUrl)

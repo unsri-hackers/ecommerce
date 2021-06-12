@@ -67,7 +67,7 @@ public class SellerController {
 
     @PostMapping("/api/v1/register")
     @ResponseBody
-    public BaseResponse<JwtResponse> registerUser(@RequestBody Seller seller, HttpServletRequest request)
+    public BaseResponse<JwtResponse> registerUser(@RequestHeader("Device-Id") String deviceId, @RequestBody Seller seller, HttpServletRequest request)
         throws UnsupportedEncodingException, MessagingException {
         RegisterSeller command = new RegisterSeller(
             authenticationManager,
@@ -76,7 +76,8 @@ public class SellerController {
             encoder,
             jwtUtils,
             mailSender,
-            seller
+            seller,
+            deviceId
         );
 
         RegisterResponse registerResponse = command.execute(Optional.empty());

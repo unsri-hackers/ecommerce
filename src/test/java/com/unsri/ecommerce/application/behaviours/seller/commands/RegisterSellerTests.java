@@ -4,6 +4,7 @@ import com.unsri.ecommerce.domain.models.Inventory;
 import com.unsri.ecommerce.domain.models.Seller;
 import com.unsri.ecommerce.infrastructure.repository.SellerRepository;
 import com.unsri.ecommerce.infrastructure.webconfig.jwt.JwtUtils;
+import com.unsri.ecommerce.infrastructure.webconfig.service.SellerDetailsImpl;
 import com.unsri.ecommerce.presentation.payload.response.RegisterResponse;
 import net.bytebuddy.utility.RandomString;
 import org.junit.jupiter.api.Test;
@@ -13,16 +14,16 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.Assert;
 
 import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
 
 import static org.mockito.Mockito.*;
 
@@ -46,17 +47,15 @@ public class RegisterSellerTests {
     @Mock
     private JavaMailSender mailSender;
 
-    private Authentication authentication;
+    private final Seller seller;
 
-    private Seller seller;
-
-    private RegisterSeller registerSeller;
+    private final RegisterSeller registerSeller;
 
     public RegisterSellerTests() {
         MockitoAnnotations.openMocks(this);
 
         seller = new Seller(
-                1,
+            1,
             "test@email.com",
             "test@email.com",
             "test12345",
@@ -66,8 +65,9 @@ public class RegisterSellerTests {
             new Date(),
             "L",
             1,
-                new ArrayList<Inventory>(),
-                false
+            new ArrayList<>(),
+            false,
+            "qwerty123"
         );
 
         registerSeller = new RegisterSeller(
@@ -77,32 +77,39 @@ public class RegisterSellerTests {
             encoder,
             jwtUtils,
             mailSender,
-            seller
+            seller,
+            "abcd"
         );
     }
 
     @Test
-    public void RegisterSellerTests_ReturnSuccess()
+    public void RegisterSellerTests_ShouldReturnStatusCodeIsOK_Success()
         throws UnsupportedEncodingException, MessagingException {
         // Arrange
-        String email = seller.getEmail();
-        String password = seller.getPassword();
 
+        // Save seller to Db
         when(encoder.encode(seller.getPassword()))
-                .thenReturn("$2a$10$/PYlcw.8IXqJu8nmrVFKXOBFQCN7JIkEN/gg4WJHB.7T8HDbeJ/Uq");
+            .thenReturn("$2a$10$/PYlcw.8IXqJu8nmrVFKXOBFQCN7JIkEN/gg4WJHB.7T8HDbeJ/Uq");
         seller.setPassword(encoder.encode(seller.getPassword()));
         seller.setIsActivated(false);
         seller.setVerificationCode(RandomString.make(64));
-
         when(sellerRepository.save(seller)).thenReturn(seller);
-        when(authenticationManager.authenticate(any()))
-            .thenReturn(initAuthentication());
+
+        // Authenticate seller
+        when(authenticationManager.authenticate(any())).thenReturn(initAuthentication());
+        when(jwtUtils.generateJwt(any()))
+            .thenReturn("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3ZXdndTEyM0BnbWFpbC5jb20iLCJpYXQiOjE2MjMxMzAxNTIsImV4cCI6MzIwMDk3Nzc1Mn0._gG__jU6i_Mr4YK655ZwuW0-GG4sXFHv5qIehG6Xr0spyxDYGn3i0vyu79ZZcuLSkV3n4J0ZHc1VumZYByauQA");
+
+        // Send verification email
+        when(request.getRequestURL()).thenReturn(new StringBuffer("http://localhost:8080/api/v1/register"));
+        when(request.getServletPath()).thenReturn("http://localhost:8080");
+        when(mailSender.createMimeMessage()).thenReturn(new MimeMessage((Session) any()));
 
         // Act
         RegisterResponse expectedResult = registerSeller.execute(Optional.empty());
 
         // Assert
-        Assert.isTrue(expectedResult.getStatusCode().equals("OK"), "status code should be OK");
+        Assert.isTrue(expectedResult.getStatusCode().substring(4).equals("OK"), "status code should be OK");
 
         // Verify
         verify(sellerRepository, times(1)).save(seller);
@@ -110,6 +117,9 @@ public class RegisterSellerTests {
 
     private Authentication initAuthentication() {
         return new Authentication() {
+            List<GrantedAuthority> authorities =
+                AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_ADMIN");
+
             @Override
             public Collection<? extends GrantedAuthority> getAuthorities() {
                 return null;
@@ -127,7 +137,13 @@ public class RegisterSellerTests {
 
             @Override
             public Object getPrincipal() {
-                return null;
+                return new SellerDetailsImpl(
+                    seller.getId(),
+                    seller.getUsername(),
+                    seller.getEmail(),
+                    seller.getPassword(),
+                    authorities
+                );
             }
 
             @Override
