@@ -17,17 +17,15 @@ public class PhotoInventory {
     @Column
     private String name;
 
+    @Column(name= "fk_inventory_id")
+    private Integer fkInventoryId;
+
     public PhotoInventory() { }
 
-    public PhotoInventory(String path, String name) {
+    public PhotoInventory(String path, String name, Integer fkInventoryId) {
         this.path = path;
         this.name = name;
-    }
-
-    public PhotoInventory(Integer id, String path, String name) {
-        this.id = id;
-        this.path = path;
-        this.name = name;
+        this.fkInventoryId = fkInventoryId;
     }
 
     public String getPath() {
@@ -48,5 +46,13 @@ public class PhotoInventory {
 
     public Integer getId() {
         return id;
+    }
+
+    public Integer getFkInventoryId() {
+        return fkInventoryId;
+    }
+
+    public void setFkInventoryId(Integer fkSellerId) {
+        this.fkInventoryId = fkSellerId;
     }
 }

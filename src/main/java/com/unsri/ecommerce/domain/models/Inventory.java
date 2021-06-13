@@ -1,5 +1,8 @@
 package com.unsri.ecommerce.domain.models;
 
+import com.sun.istack.NotNull;
+import org.springframework.data.annotation.QueryAnnotation;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -21,7 +24,7 @@ public class Inventory {
     @Column(name = "fk_seller_id")
     private Integer fkSellerId;
 
-    @OneToMany(targetEntity = PhotoInventory.class)
+    @OneToMany(targetEntity = PhotoInventory.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_inventory_id", referencedColumnName = "id")
     private List<PhotoInventory> photoInventories;
 

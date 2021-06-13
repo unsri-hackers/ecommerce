@@ -12,7 +12,6 @@ import com.unsri.ecommerce.domain.models.Inventory;
 import com.unsri.ecommerce.domain.models.InventoryResponse;
 import com.unsri.ecommerce.infrastructure.repository.InventoryRepository;
 
-import com.unsri.ecommerce.infrastructure.repository.SellerRepository;
 import com.unsri.ecommerce.infrastructure.security.jwt.JwtUtils;
 import com.unsri.ecommerce.presentation.payload.request.UploadInventoryRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,19 +22,17 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
+import javax.validation.Valid;
 
 @RestController
 public class InventoryController extends BaseController {
 
     private InventoryRepository inventoryRepository;
-    private SellerRepository sellerRepository;
-
     @Autowired
     JwtUtils jwtUtils;
 
-    public InventoryController(InventoryRepository inventoryRepository, SellerRepository sellerRepository) {
+    public InventoryController(InventoryRepository inventoryRepository) {
         this.inventoryRepository = inventoryRepository;
-        this.sellerRepository = sellerRepository;
     }
 
     @GetMapping("api/v1/storefront/products")
@@ -91,16 +88,16 @@ public class InventoryController extends BaseController {
     }
 
     @PostMapping(value = "/api/v1/storefront/products")
-    public BaseResponse addInventory(HttpServletRequest request, @RequestBody UploadInventoryRequest item) {
+    public BaseResponse addInventory(HttpServletRequest request, @Valid @RequestBody UploadInventoryRequest item) {
         int sellerId = getAuthorizedUser(request.getUserPrincipal());
-        Inventory inventory = new Inventory(item.getProductName(), item.getPrice(),sellerId, item.getPhoto());
-
+        BaseResponse baseResponse = new BaseResponse<>();
+        Inventory inventory = new Inventory(item.getProductName(), item.getPrice(), sellerId, item.getPhotos());
         CreateInventory command = new CreateInventory(inventoryRepository);
         command.execute(Optional.of(inventory));
-        BaseResponse baseResponse= new BaseResponse<>();
 
         baseResponse.setMessage("Create Inventory Successfully");
         baseResponse.setStatusCode(HttpStatus.CREATED.toString());
+
         return baseResponse;
     }
 
