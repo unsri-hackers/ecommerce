@@ -1,6 +1,6 @@
-package com.unsri.ecommerce.infrastructure.security.jwt;
+package com.unsri.ecommerce.infrastructure.webconfig.jwt;
 
-import com.unsri.ecommerce.infrastructure.security.service.SellerDetailsServiceImpl;
+import com.unsri.ecommerce.infrastructure.webconfig.service.SellerDetailsServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         try {
             String jwt = parseJwt(request);
 
-            if (jwt != null && jwtUtils.validateJwt(jwt)) {
+            if (jwt != null && jwtUtils.validateJwt(jwt) && !jwtUtils.isBlocked(jwt)) {
                 String email = jwtUtils.getEmailFromJwt(jwt);
 
                 UserDetails userDetails = sellerDetailsServiceImpl.loadUserByUsername(email);

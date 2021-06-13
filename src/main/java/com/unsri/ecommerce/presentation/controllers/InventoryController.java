@@ -12,9 +12,7 @@ import com.unsri.ecommerce.domain.models.Inventory;
 import com.unsri.ecommerce.domain.models.InventoryResponse;
 import com.unsri.ecommerce.infrastructure.repository.InventoryRepository;
 
-import com.unsri.ecommerce.infrastructure.security.jwt.JwtUtils;
 import com.unsri.ecommerce.presentation.payload.request.UploadInventoryRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -28,8 +26,6 @@ import javax.validation.Valid;
 public class InventoryController extends BaseController {
 
     private InventoryRepository inventoryRepository;
-    @Autowired
-    JwtUtils jwtUtils;
 
     public InventoryController(InventoryRepository inventoryRepository) {
         this.inventoryRepository = inventoryRepository;
@@ -53,7 +49,7 @@ public class InventoryController extends BaseController {
     }
 
     @GetMapping(value = "api/v1/storefront/products/paging")
-    public BaseResponse<List<InventoryResponse>> getInventoriesPaginatedBySellerTypeAndSellerId(HttpServletRequest request,
+    public BaseResponse<List<InventoryResponse>> getInventoriesPaginatedBySellerId(HttpServletRequest request,
                                                                                                 @RequestParam(value = "page", defaultValue = "0") int page,
                                                                                                 @RequestParam(value = "size", defaultValue = "10") int size
     ) {

@@ -40,24 +40,32 @@ public class Seller {
     @Column(name = "vendor_type")
     private Integer type;
 
+    @Column
+    private boolean isActivated;
+
+    @Column
+    private String verificationCode;
+
     @OneToMany(targetEntity = Inventory.class)
     @JoinColumn(name = "fk_seller_id", referencedColumnName = "id")
     private List<Inventory> inventories;
 
-    public Seller() { }
+    public Seller() {}
 
     public Seller(
-            Integer id,
-            String username,
-            String email,
-            String password,
-            String firstName,
-            String lastName,
-            String avatar,
-            Date birthDate,
-            String gender,
-            Integer type,
-            List<Inventory> inventories
+        Integer id,
+        String username,
+        String email,
+        String password,
+        String firstName,
+        String lastName,
+        String avatar,
+        Date birthDate,
+        String gender,
+        Integer type,
+        List<Inventory> inventories,
+        boolean isActivated,
+        String verificationCode
     ) {
         this.id = id;
         this.username = username;
@@ -70,6 +78,8 @@ public class Seller {
         this.gender = gender;
         this.type = type;
         this.inventories = inventories;
+        this.isActivated = isActivated;
+        this.verificationCode = verificationCode;
     }
 
     public Integer getId() {
@@ -158,5 +168,21 @@ public class Seller {
 
     public void setInventories(List<Inventory> inventories) {
         this.inventories = inventories;
+    }
+
+    public boolean getIsActivated() {
+        return isActivated;
+    }
+
+    public void setIsActivated(boolean isActivated) {
+        this.isActivated = isActivated;
+    }
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
     }
 }

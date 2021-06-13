@@ -1,8 +1,8 @@
 package com.unsri.ecommerce.application.behaviours.seller.commands;
 
 import com.unsri.ecommerce.application.behaviours.BaseCommand;
-import com.unsri.ecommerce.infrastructure.security.jwt.JwtUtils;
-import com.unsri.ecommerce.infrastructure.security.service.SellerDetailsImpl;
+import com.unsri.ecommerce.infrastructure.webconfig.jwt.JwtUtils;
+import com.unsri.ecommerce.infrastructure.webconfig.service.SellerDetailsImpl;
 import com.unsri.ecommerce.presentation.payload.response.JwtResponse;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,12 +17,20 @@ public class LoginSeller implements BaseCommand<JwtResponse> {
 
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
+    private final String deviceId;
     private final String email;
     private final String password;
 
-    public LoginSeller(AuthenticationManager authenticationManager, JwtUtils jwtUtils, String email, String password) {
+    public LoginSeller(
+        AuthenticationManager authenticationManager,
+        JwtUtils jwtUtils,
+        String deviceId,
+        String email,
+        String password
+    ) {
         this.authenticationManager = authenticationManager;
         this.jwtUtils = jwtUtils;
+        this.deviceId = deviceId;
         this.email = email;
         this.password = password;
     }
@@ -36,15 +44,14 @@ public class LoginSeller implements BaseCommand<JwtResponse> {
         String jwt = jwtUtils.generateJwt(authentication);
 
         SellerDetailsImpl sellerDetails = (SellerDetailsImpl) authentication.getPrincipal();
-        List<String> roles = sellerDetails.getAuthorities().stream()
-            .map(item -> item.getAuthority())
-            .collect(Collectors.toList());
+
+        jwtUtils.saveJwtUser(jwt, deviceId, sellerDetails);
 
         return new JwtResponse(
             jwt,
             sellerDetails.getId(),
             sellerDetails.getUsername(),
-            sellerDetails.getEmail(),
-            roles);
+            sellerDetails.getEmail()
+        );
     }
 }
