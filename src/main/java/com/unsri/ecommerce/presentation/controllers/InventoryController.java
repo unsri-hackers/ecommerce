@@ -12,20 +12,25 @@ import com.unsri.ecommerce.domain.models.Inventory;
 import com.unsri.ecommerce.domain.models.InventoryResponse;
 import com.unsri.ecommerce.infrastructure.repository.InventoryRepository;
 
+import com.unsri.ecommerce.infrastructure.webconfig.jwt.JwtUtils;
 import com.unsri.ecommerce.presentation.payload.request.UploadInventoryRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 public class InventoryController extends BaseController {
 
     private InventoryRepository inventoryRepository;
+
+    @Autowired
+    JwtUtils jwtUtils;
 
     public InventoryController(InventoryRepository inventoryRepository) {
         this.inventoryRepository = inventoryRepository;

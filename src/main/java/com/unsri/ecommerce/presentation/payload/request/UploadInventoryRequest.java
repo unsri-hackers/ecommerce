@@ -7,10 +7,10 @@ import javax.validation.constraints.Positive;
 import java.util.List;
 
 public class UploadInventoryRequest {
-    @NotEmpty(message = "name must be filled")
+    @NotEmpty
     private String productName;
 
-    @Positive(message = "price must be more than zero")
+    @Positive
     private Double price;
 
     private List<PhotoInventory> photos;
