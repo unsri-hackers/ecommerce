@@ -3,6 +3,7 @@ package com.unsri.ecommerce.presentation.controllers;
 import com.unsri.ecommerce.application.behaviours.seller.commands.LoginSeller;
 import com.unsri.ecommerce.application.behaviours.seller.commands.LogoutSeller;
 import com.unsri.ecommerce.application.behaviours.seller.commands.RegisterSeller;
+import com.unsri.ecommerce.application.behaviours.seller.query.GetSellerById;
 import com.unsri.ecommerce.application.behaviours.seller.query.VerifySeller;
 import com.unsri.ecommerce.domain.models.Seller;
 import com.unsri.ecommerce.infrastructure.repository.JwtUserRepository;
@@ -25,7 +26,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Optional;
 
 @RestController
-public class SellerController {
+public class SellerController extends BaseController{
 
     @Autowired
     AuthenticationManager authenticationManager;
@@ -116,6 +117,20 @@ public class SellerController {
         baseResponse.setStatusCode(HttpStatus.OK.toString().substring(4));
         baseResponse.setMessage(message);
 
+        return baseResponse;
+    }
+
+    @GetMapping("/api/v1/user")
+    public  BaseResponse<Seller> getUser(HttpServletRequest request) {
+        int sellerId = getAuthorizedUser(request.getUserPrincipal());
+
+        Seller seller = new Seller();
+        seller.setId(sellerId);
+        GetSellerById getSellerById = new GetSellerById(sellerRepository);
+        Seller sellerResponse = getSellerById.execute(Optional.of(seller));
+
+        BaseResponse<Seller> baseResponse = new BaseResponse<>();
+        baseResponse.setResult(sellerResponse);
         return baseResponse;
     }
 
