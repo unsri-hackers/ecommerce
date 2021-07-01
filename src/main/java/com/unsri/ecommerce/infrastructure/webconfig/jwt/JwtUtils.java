@@ -86,6 +86,11 @@ public class JwtUtils {
                 jwtUser.setInvalidated(false);
                 jwtUserRepository.save(jwtUser);
             }
+
+            if (jwtUser.getUserId() == sellerDetails.getId() && jwtUser.getDeviceId().equals(deviceId)) {
+                jwtUser.setJwt(jwt);
+                jwtUserRepository.save(jwtUser);
+            }
         }
     }
 
