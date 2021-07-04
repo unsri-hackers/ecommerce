@@ -1,10 +1,10 @@
 package com.unsri.ecommerce.application.behaviours.seller.commands;
 
-import com.unsri.ecommerce.domain.models.Seller;
+import com.unsri.ecommerce.application.domain.Seller;
 import com.unsri.ecommerce.infrastructure.repository.SellerRepository;
-import com.unsri.ecommerce.infrastructure.webconfig.jwt.JwtUtils;
-import com.unsri.ecommerce.infrastructure.webconfig.service.SellerDetailsImpl;
-import com.unsri.ecommerce.presentation.payload.response.RegisterResponse;
+import com.unsri.ecommerce.presentation.webconfig.jwt.JwtUtils;
+import com.unsri.ecommerce.presentation.webconfig.service.SellerDetailsImpl;
+import com.unsri.ecommerce.presentation.controllers.response.RegisterResponse;
 import net.bytebuddy.utility.RandomString;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

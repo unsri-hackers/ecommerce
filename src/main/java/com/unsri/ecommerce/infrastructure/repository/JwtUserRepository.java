@@ -1,6 +1,6 @@
 package com.unsri.ecommerce.infrastructure.repository;
 
-import com.unsri.ecommerce.domain.models.JwtUser;
+import com.unsri.ecommerce.application.domain.JwtUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

@@ -4,7 +4,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.unsri.ecommerce.domain.models.Inventory;
+import com.unsri.ecommerce.application.domain.Inventory;
 import com.unsri.ecommerce.infrastructure.repository.InventoryRepository;
 
 import org.junit.jupiter.api.Test;
