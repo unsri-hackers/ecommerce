@@ -53,7 +53,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/v1/login").permitAll() // allow to access this endpoint without auth
                 .antMatchers("/api/v1/register").permitAll() // allow to access this endpoint without auth
                 .antMatchers("/api/v1/verify").permitAll() // allow to access this endpoint without auth
-                .antMatchers("/api/v1/storefront/products").permitAll() // allow to access this endpoint without auth
                 .anyRequest().authenticated();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
