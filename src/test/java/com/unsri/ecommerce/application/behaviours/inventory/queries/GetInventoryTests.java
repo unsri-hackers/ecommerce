@@ -1,6 +1,6 @@
 package com.unsri.ecommerce.application.behaviours.inventory.queries;
 
-import com.unsri.ecommerce.domain.models.Inventory;
+import com.unsri.ecommerce.application.domain.Inventory;
 import com.unsri.ecommerce.infrastructure.repository.InventoryRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

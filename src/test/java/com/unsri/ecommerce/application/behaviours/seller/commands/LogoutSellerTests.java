@@ -1,6 +1,6 @@
 package com.unsri.ecommerce.application.behaviours.seller.commands;
 
-import com.unsri.ecommerce.domain.models.JwtUser;
+import com.unsri.ecommerce.application.domain.JwtUser;
 import com.unsri.ecommerce.infrastructure.repository.JwtUserRepository;
 import io.jsonwebtoken.lang.Assert;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,7 @@
 package com.unsri.ecommerce.application.behaviours.inventory.commands;
 
 import com.unsri.ecommerce.application.behaviours.BaseCommand;
-import com.unsri.ecommerce.domain.models.Inventory;
+import com.unsri.ecommerce.application.domain.Inventory;
 import com.unsri.ecommerce.infrastructure.repository.InventoryRepository;
 
 import java.util.Optional;

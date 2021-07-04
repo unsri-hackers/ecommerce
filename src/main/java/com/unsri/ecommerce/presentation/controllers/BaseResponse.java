@@ -5,36 +5,28 @@ public class BaseResponse<T> {
     private String statusCode;
     private String message;
 
-    public BaseResponse() {}
-
-    public BaseResponse(T result, String statusCode, String message) {
-        this.result = result;
-        this.statusCode = statusCode;
-        this.message = message;
+    public T getResult() {
+        return result;
     }
 
     public void setResult(T result) {
         this.result = result;
     }
 
-    public void setStatusCode(String statusCode) {
-        this.statusCode = statusCode;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public T getResult() {
-        return result;
-    }
-
     public String getStatusCode() {
         return statusCode;
     }
 
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
+    }
+
     public String getMessage() {
         return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     @Override
