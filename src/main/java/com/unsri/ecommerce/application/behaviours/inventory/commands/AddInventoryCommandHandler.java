@@ -34,6 +34,7 @@ public class AddInventoryCommandHandler implements Handler<AddInventoryCommand, 
 
         inventory.setItemName(command.getProductName());
         inventory.setPrice(Double.parseDouble(command.getProductPrice()));
+        inventory.setFkSellerId(command.getSellerId());
 
         List<PhotoInventory> inventories = new ArrayList<>();
 
