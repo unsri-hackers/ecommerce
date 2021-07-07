@@ -5,7 +5,7 @@ import java.util.List;
 public class InventoryDTO {
     private int sellerId;
     private String productName;
-    private String productPrice;
+    private String price;
     private List<PhotoDTO> photos;
 
     public int getSellerId() {
@@ -24,12 +24,12 @@ public class InventoryDTO {
         this.productName = productName;
     }
 
-    public String getProductPrice() {
-        return productPrice;
+    public String getPrice() {
+        return price;
     }
 
-    public void setProductPrice(String productPrice) {
-        this.productPrice = productPrice;
+    public void setPrice(String price) {
+        this.price = price;
     }
 
     public List<PhotoDTO> getPhotos() {
