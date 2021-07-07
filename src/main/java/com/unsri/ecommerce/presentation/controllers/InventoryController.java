@@ -103,7 +103,7 @@ public class InventoryController extends BaseController {
         AddInventoryCommand addInventoryCommand = new AddInventoryCommand();
         addInventoryCommand.setSellerId(payload.getSellerId());
         addInventoryCommand.setProductName(payload.getProductName());
-        addInventoryCommand.setProductPrice(payload.getProductPrice());
+        addInventoryCommand.setPrice(payload.getPrice());
         addInventoryCommand.setPhotos(payload.getPhotos());
 
         Response<Inventory, EnumStateCode> response = (Response<Inventory, EnumStateCode>)
