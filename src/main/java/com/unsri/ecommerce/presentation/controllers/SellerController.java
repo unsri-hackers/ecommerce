@@ -131,6 +131,8 @@ public class SellerController extends BaseController{
 
         BaseResponse<Seller> baseResponse = new BaseResponse<>();
         baseResponse.setResult(sellerResponse);
+        baseResponse.setStatusCode(HttpStatus.OK.toString().substring(4));
+        baseResponse.setMessage("Successfully get user profile");
         return baseResponse;
     }
 
