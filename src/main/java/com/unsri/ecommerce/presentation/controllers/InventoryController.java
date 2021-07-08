@@ -8,6 +8,7 @@ import com.unsri.ecommerce.application.behaviours.inventory.queries.GetInventori
 import com.unsri.ecommerce.application.behaviours.inventory.queries.GetInventory;
 import com.unsri.ecommerce.application.domain.Inventory;
 import com.unsri.ecommerce.application.entities.EnumStateCode;
+import com.unsri.ecommerce.application.entities.InventoriesResponse;
 import com.unsri.ecommerce.application.entities.InventoryResponse;
 import com.unsri.ecommerce.infrastructure.mediator.Mediator;
 import com.unsri.ecommerce.infrastructure.mediator.Response;
@@ -54,16 +55,16 @@ public class InventoryController extends BaseController {
     }
 
     @GetMapping(value = "api/v1/storefront/products/paging")
-    public BaseResponse<List<InventoryResponse>> getInventoriesPaginatedBySellerId(HttpServletRequest request,
-                                                                                   @RequestParam(value = "page", defaultValue = "0") int page,
-                                                                                   @RequestParam(value = "size", defaultValue = "10") int size
+    public BaseResponse<InventoriesResponse> getInventoriesPaginatedBySellerId(HttpServletRequest request,
+                                                                               @RequestParam(value = "page", defaultValue = "0") int page,
+                                                                               @RequestParam(value = "size", defaultValue = "10") int size
     ) {
         Pageable pageable = PageRequest.of(page, size);
 
         int sellerId = getAuthorizedUser(request.getUserPrincipal());
 
         GetInventoriesBySellerId command = new GetInventoriesBySellerId(inventoryRepository, sellerId, pageable);
-        BaseResponse<List<InventoryResponse>> response = new BaseResponse<>();
+        BaseResponse<InventoriesResponse> response = new BaseResponse<>();
         List<InventoryResponse> responseHolder = new ArrayList<>();
 
         List<Inventory> inventories = command.execute(Optional.empty());
@@ -81,7 +82,7 @@ public class InventoryController extends BaseController {
             responseHolder.add(inventoryResponse);
         }
 
-        response.setResult(responseHolder);
+        response.setResult(new InventoriesResponse(responseHolder));
         response.setStatusCode(HttpStatus.OK.toString());
         response.setMessage("Successfully get data of total " + responseHolder.size());
 

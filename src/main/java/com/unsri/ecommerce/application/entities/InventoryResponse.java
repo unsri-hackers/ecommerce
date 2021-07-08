@@ -1,9 +1,13 @@
 package com.unsri.ecommerce.application.entities;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.unsri.ecommerce.application.domain.PhotoInventory;
 
 import java.util.List;
 
+@JsonPropertyOrder(value = {"sellerId", "sellerName", "productId", "productName", "price", "photos"})
+@JsonTypeName(value = "inventory")
 public class InventoryResponse {
 
     private Integer sellerId;
@@ -49,6 +53,7 @@ public class InventoryResponse {
         this.productName = productName;
     }
 
+    @JsonPropertyOrder(value = "photos")
     public List<PhotoInventory> getPhotos() {
         return photoInventories;
     }
