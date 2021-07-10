@@ -1,6 +1,6 @@
 package com.unsri.ecommerce.presentation.controllers;
 
-import com.unsri.ecommerce.infrastructure.webconfig.service.SellerDetailsImpl;
+import com.unsri.ecommerce.presentation.webconfig.service.SellerDetailsImpl;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import java.security.Principal;

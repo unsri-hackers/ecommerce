@@ -1,8 +1,8 @@
 package com.unsri.ecommerce.application.behaviours.seller.commands;
 
-import com.unsri.ecommerce.infrastructure.webconfig.jwt.JwtUtils;
-import com.unsri.ecommerce.infrastructure.webconfig.service.SellerDetailsImpl;
-import com.unsri.ecommerce.presentation.payload.response.JwtResponse;
+import com.unsri.ecommerce.presentation.webconfig.jwt.JwtUtils;
+import com.unsri.ecommerce.presentation.webconfig.service.SellerDetailsImpl;
+import com.unsri.ecommerce.presentation.controllers.response.JwtResponse;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;

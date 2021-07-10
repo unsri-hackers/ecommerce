@@ -1,7 +1,7 @@
 package com.unsri.ecommerce.application.behaviours.seller.commands;
 
 import com.unsri.ecommerce.application.behaviours.BaseCommand;
-import com.unsri.ecommerce.domain.models.JwtUser;
+import com.unsri.ecommerce.application.domain.JwtUser;
 import com.unsri.ecommerce.infrastructure.repository.JwtUserRepository;
 
 import java.util.Optional;
